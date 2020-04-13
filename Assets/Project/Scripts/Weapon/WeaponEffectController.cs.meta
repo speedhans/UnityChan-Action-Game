@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 9a8ab5a527db24d4e9a552d952fdf9e7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_Material: {fileID: 2100000, guid: 5dce0449fc412a74a9ec3cd819b61980, type: 2}
+  - m_EnableEffect: {fileID: 1515189548435607704, guid: effff07ddf53fee448f72c769327aeff,
+      type: 3}
+  - m_DisableEffect: {fileID: 3621569830055163363, guid: 7e454ac096a6f2d418f84864554274bf,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

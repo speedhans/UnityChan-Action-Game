@@ -75,10 +75,17 @@ public class PlayerSkillBaseComponent : CharacterBaseComponent
         return true;
     }
 
-    protected bool AnimStateCheck()
+    protected void SkillAnimationPlay(bool _MotionCancel = false, float _AnimNormalizeOffset = 0.0f)
     {
-        int currentAnimhash = m_CharacterBase.m_Animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
-        if (currentAnimhash == m_AnimHash) return false;
-        return true;
+        if (_MotionCancel)
+        {
+            m_PlayerCharacter.StartMotionCancelRim(5.0f, 0.75f);
+            m_CharacterBase.m_Animator.CrossFade(m_AnimHash, 0.0f, 0, _AnimNormalizeOffset);
+            m_PlayerCharacter.CreateSpectrumMesh(1.0f, true, GameManager.Instacne.m_Main.m_SpectrumMaterial);
+        }
+        else
+        {
+            m_CharacterBase.m_Animator.CrossFade(m_AnimHash, 0.15f);
+        }
     }
 }

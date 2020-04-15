@@ -26,16 +26,12 @@ public class PlayerSkillFinishPunchComponent : PlayerSkillBaseComponent
     {
         if (_Phase != InputActionPhase.Started) return;
         if (!CheckSkillAvailability()) return;
-        if (!AnimStateCheck()) return;
 
         if (CheckMotionCancelAvailability())
-        {
-            m_PlayerCharacter.StartMotionCancelRim(5.0f, 0.75f);
-            m_CharacterBase.m_Animator.CrossFade(m_AnimHash, 0.0f);
-        }
+            SkillAnimationPlay(true, 0.5f);
         else if (!DefaultStateCheck()) return;
+        else SkillAnimationPlay();
         m_PlayerCharacter.AllWeaponDisable();
-        m_CharacterBase.m_Animator.CrossFade(m_AnimHash, 0.15f);
         LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_ChargeEffect);
         life.Initialize();
         life.SetTargetTransform(m_CharacterBase.m_RightHandPoint);
@@ -55,7 +51,7 @@ public class PlayerSkillFinishPunchComponent : PlayerSkillBaseComponent
             if (life)
             {
                 life.Initialize();
-                life.transform.position = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward * 0.35f);
+                life.transform.SetPositionAndRotation(m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward * 0.35f), m_CharacterBase.transform.rotation);
                 life.gameObject.SetActive(true);
             }
         }

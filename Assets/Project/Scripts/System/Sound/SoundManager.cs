@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    static int MaximumFXCount = 10;
+    static int MaximumFXCount = 15;
 
     static SoundManager single;
     static public SoundManager Instance

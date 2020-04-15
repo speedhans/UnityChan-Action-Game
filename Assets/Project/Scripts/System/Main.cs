@@ -5,6 +5,7 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
     public Material m_SpectrumMaterial;
+    public Material m_SpectrumMaterialSkyBlue;
 
     public bool m_CameraAxisXInvers = false;
 

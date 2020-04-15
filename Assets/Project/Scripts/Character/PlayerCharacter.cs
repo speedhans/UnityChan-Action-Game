@@ -168,7 +168,30 @@ public class PlayerCharacter : CharacterBase
         }
     }
 
-    public void CreateSpectrumMesh(float _Duration, bool _AlphaDecrease)
+    public override void GiveToDamage(int _AttackerID, float _Damage)
+    {
+        if (m_Immortal) return;
+
+        if (m_IsDashing)
+        {
+            CreateSpectrumMesh(1.5f, true, GameManager.Instacne.m_Main.m_SpectrumMaterialSkyBlue);
+            LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>("AvoidEffect");
+            life.Initialize();
+            life.transform.position = transform.position + Vector3.up;
+            life.gameObject.SetActive(true);
+            UIManager.Instacne.m_MotionCancelGauge.AddGauge(2);
+            return;
+        }
+
+        if (m_UseHitAnimation)
+        {
+            AllWeaponDisable();
+        }
+
+        base.GiveToDamage(_AttackerID, _Damage);
+    }
+
+    public void CreateSpectrumMesh(float _Duration, bool _AlphaDecrease, Material _Material)
     {
         GameObject g = Instantiate(m_Animator.gameObject);
         g.transform.SetPositionAndRotation(transform.position, transform.rotation);
@@ -186,7 +209,7 @@ public class PlayerCharacter : CharacterBase
         a.CrossFade(currentAnimhash, 0.0f, 0, point);
         a.speed = 0.00f;
 
-        Material spectrumMat = new Material(GameManager.Instacne.m_Main.m_SpectrumMaterial);
+        Material spectrumMat = new Material(_Material);
         Renderer[] renderers = g.GetComponentsInChildren<Renderer>();
         for (int i = 0; i < renderers.Length; ++i)
         {

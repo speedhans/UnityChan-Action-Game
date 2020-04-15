@@ -15,13 +15,13 @@ public class MotionCancelGauge : MonoBehaviour
     Sprite[] m_GaugeSprite = new Sprite[3];
 
     public UnityEngine.UI.Image[] m_GaugeImage;
-    int m_GaugeCount;
+    int m_GaugeMaxCount;
     int m_CurrentGauge = 0;
 
     private void Awake()
     {
         UIManager.Instacne.m_MotionCancelGauge = this;
-        m_GaugeCount = m_GaugeImage.Length * 2;
+        m_GaugeMaxCount = m_GaugeImage.Length * 2;
 
         RefreshGauge();
     }
@@ -30,19 +30,19 @@ public class MotionCancelGauge : MonoBehaviour
 
     public void AddGauge(int _Value)
     {
-        m_CurrentGauge += _Value;
+        m_CurrentGauge = Mathf.Clamp(m_CurrentGauge + _Value, 0, m_GaugeMaxCount);
         RefreshGauge();
     }
 
     public void SubGauge(int _Value)
     {
-        m_CurrentGauge -= _Value;
+        m_CurrentGauge = Mathf.Clamp(m_CurrentGauge - _Value, 0, m_GaugeMaxCount);
         RefreshGauge();
     }
 
     public void SetGauge(int _Value)
     {
-        m_CurrentGauge = _Value;
+        m_CurrentGauge = Mathf.Clamp(_Value, 0, m_GaugeMaxCount);
         RefreshGauge();
     }
 
@@ -66,7 +66,7 @@ public class MotionCancelGauge : MonoBehaviour
 
     void SetGaugeState(int _CellNumber, TYPE _Type)
     {
-        if (_CellNumber > (m_GaugeCount - 1)) return;
+        if (_CellNumber > (m_GaugeMaxCount - 1)) return;
         m_GaugeImage[_CellNumber].sprite = m_GaugeSprite[(int)_Type];
     }
 }

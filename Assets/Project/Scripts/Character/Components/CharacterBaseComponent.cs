@@ -33,6 +33,8 @@ public class CharacterBaseComponent
     protected bool DefaultStateCheck()
     {
         if (GameManager.Instacne.m_Main.IsPlayStop() || GameManager.Instacne.m_Main.IsGameStop()) return false;
+        if (m_CharacterBase.m_Live == CharacterBase.E_Live.DEAD) return false;
+        if (m_CharacterBase.m_HitMotion) return false;
         if (m_CharacterBase.m_ActiveMotionRunning) return false;
 
         return true;

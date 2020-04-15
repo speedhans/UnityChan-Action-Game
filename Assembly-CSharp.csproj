@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{73F39681-6FA3-F19C-C611-FFFDEF6ADD1D}</ProjectGuid>
+    <ProjectGuid>{720146ED-DF9F-8E17-9D41-58E641D83577}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Project\Scripts\Character\AICharacter.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationCallbackEvent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\AnimAudioPlay.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\AnimFootAudioPlay.cs" />
@@ -80,6 +81,12 @@
     <Compile Include="Assets\Project\Scripts\Character\Components\Skill\PlayerSkillKatanaAttackComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Components\Skill\PlayerSkillSwordAttackComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Components\Skill\PlayerSkillTwoHandSwordAttackComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\Components\EnemyBaseComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\Components\EnemySearchComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonNormalAttackComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDraonBaseComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\FireDragonCharacter.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Interface\IDamage.cs" />
     <Compile Include="Assets\Project\Scripts\Character\PlayerCharacter.cs" />
     <Compile Include="Assets\Project\Scripts\System\Camera\BrainCameraAuthoring.cs" />
     <Compile Include="Assets\Project\Scripts\System\Camera\CameraAuthoring.cs" />
@@ -94,6 +101,7 @@
     <Compile Include="Assets\Project\Scripts\System\Sound\SoundClip.cs" />
     <Compile Include="Assets\Project\Scripts\System\Sound\SoundManager.cs" />
     <Compile Include="Assets\Project\Scripts\TestCode.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\ComboViewer.cs" />
     <Compile Include="Assets\Project\Scripts\UI\MotionCancelGauge.cs" />
     <Compile Include="Assets\Project\Scripts\UI\PlayerHPBar.cs" />
     <Compile Include="Assets\Project\Scripts\UI\UIManager.cs" />
@@ -139,6 +147,9 @@
     <Compile Include="Assets\Store\Effect\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\Store\Effect\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\Store\Effect\ParticleFX03\_Scripts\Rotating.cs" />
+    <Compile Include="Assets\Store\Model\Malbers Animations\Common\Scripts\Events\UnityEventRaiser.cs" />
+    <Compile Include="Assets\Store\Model\Malbers Animations\Common\Scripts\Readme\Readme.cs" />
+    <Compile Include="Assets\Store\Model\Malbers Animations\Common\Scripts\Utilities\UseTransform.cs" />
     <Compile Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Scripts\AutoBlink.cs" />
     <Compile Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Scripts\CameraController.cs" />
     <Compile Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Scripts\FaceUpdate.cs" />
@@ -153,104 +164,135 @@
     <Compile Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\SplashScreen\Scripts\SplashScreen.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Mask8Toon.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Store\Effect\JMO Assets\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
     <None Include="Assets\Store\Effect\ParticleFX03\_Shaders\NW_Particle Rim AddSmooth 2S.shader" />
     <None Include="Assets\Project\Shaders\URP Toon Transparent Shader.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Dragons\Eggs\Shader\DragonEggs_Shader.shader" />
     <None Include="Assets\Store\Code\XWeaponTrail\Model\readme.txt" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Color4x2.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Color4x3S.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Store\Effect\JMO Assets\Cartoon FX\CartoonFX Free.txt" />
     <None Include="Assets\Store\Effect\ParticleFX03\_Shaders\NW_Particle Rim AddSmooth.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Color4x4.shader" />
+    <None Include="Assets\Project\Font\상용한글2350자.txt" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Mask4Toon.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Mask4Realistic.shader" />
     <None Include="Assets\Project\Shaders\URP Trail Shader.shader" />
     <None Include="Assets\Project\Shaders\URP Toon Shader.shader" />
     <None Include="Assets\Project\Shaders\URP Default Shader.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Color4x3.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
     <None Include="Assets\Project\Shaders\URP Toon NSM Shader.shader" />
     <None Include="Assets\Project\Shaders\URP Weapon Shader.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\Store\Model\RRFreelance\CustomizableWeapons\HowToUse.txt" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Store\Effect\ParticleFX03\_Shaders\NW_Particle AddSmooth.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\AnisotropicCircular.shader" />
     <None Include="Assets\Store\Code\XWeaponTrail\Shader\xft_displacement_screen.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Color4x4v2.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Audio\Voice\unity-chan_voice_list.txt" />
     <None Include="Assets\Store\Effect\ParticleFX03\_Shaders\NW_Reflective Add.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\AnisotropicWard.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Project\Shaders\URP HPBar Shader.shader" />
     <None Include="Assets\Store\Effect\ParticleFX03\_Shaders\NW_Unlit Color.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
     <None Include="Assets\Store\Effect\ParticleFX03\_Shaders\NW_Reflective Alpha.shader" />
     <None Include="Assets\Store\Effect\ParticleFX03\_Docs\Readme.txt" />
     <None Include="Assets\Store\Effect\JMO Assets\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\Stage\Shader\AlphaMask.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\Store\Code\XWeaponTrail\readme.txt" />
     <None Include="Assets\Project\Shaders\URP Spectrum Shader.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Store\Animation\RPG Character Animation Pack\SuperCharacterController\Code\SuperCharacterController\README.txt" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Project\Shaders\URP OutLine Shader.shader" />
+    <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Mask8Realistic.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
     <None Include="Assets\Store\Model\RRFreelance\CustomizableWeapons\Shaders\PB_VertexColor.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Cinemachine">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>F:/Project/RPG Project/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>F:/Project/UnityChanActionGame/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>F:/Engines/Unity/2019.3.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

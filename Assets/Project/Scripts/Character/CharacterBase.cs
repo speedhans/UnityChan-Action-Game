@@ -5,13 +5,13 @@ using sunTT;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-public class CharacterBase : MonoBehaviour
+public class CharacterBase : MonoBehaviour, IDamage
 {
     static public readonly int m_AnimKeyIdle = Animator.StringToHash("Idle");
     static public readonly int m_AnimKeyMoveDirectionX = Animator.StringToHash("MoveDirectionX");
     static public readonly int m_AnimKeyMoveDirectionY = Animator.StringToHash("MoveDirectionY");
     static public readonly int m_AnimKeyDead = Animator.StringToHash("Dead");
-
+    static public readonly int m_AnimKeyHit = Animator.StringToHash("Hit");
     public enum E_Team
     {
         RED,
@@ -22,11 +22,6 @@ public class CharacterBase : MonoBehaviour
     public E_Team m_Team = E_Team.RED;
 
     bool DestoryThisGameObject = false;
-
-    public enum E_State
-    {
-
-    }
 
     public enum E_Live
     {
@@ -63,18 +58,29 @@ public class CharacterBase : MonoBehaviour
     public bool IsActiveMotionRunnung { get { return m_ActiveMotionRunning; } }
     [HideInInspector]
     public bool m_IsDashing = false;
+    [HideInInspector]
+    public bool m_HitMotion = false;
+    [SerializeField]
+    protected bool m_UseHitAnimation = false;
+
+    [HideInInspector]
+    public bool m_Immortal = false;
 
     public LayerMask m_EnemyLayerMask;
     public AudioClip[] m_AudioList;
+
     protected virtual void Awake()
     {
-        if (!m_Model) return;
-
-        GameObject model = Instantiate(m_Model, transform);
-        model.transform.localPosition = Vector3.zero;
-        model.transform.localRotation = Quaternion.identity;
-
         m_Animator = GetComponentInChildren<Animator>();
+        if (!m_Animator)
+        {
+            if (!m_Model) return;
+            GameObject model = Instantiate(m_Model, transform);
+            model.transform.localPosition = Vector3.zero;
+            model.transform.localRotation = Quaternion.identity;
+            m_Animator = GetComponentInChildren<Animator>();
+        }
+
         m_AnimCallback = m_Animator.gameObject.AddComponent<AnimationCallbackEvent>();
         m_Rigidbody = GetComponent<Rigidbody>();
         m_CapsuleCollider = GetComponent<CapsuleCollider>();
@@ -182,15 +188,28 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    public void GiveToDamage(int _AttackerID, float _Damage)
+    public virtual void GiveToDamage(int _AttackerID, float _Damage)
     {
         if (m_Live == E_Live.DEAD) return;
+        if (m_Immortal) return;
+        if (_AttackerID == 0)
+        {
+            UIManager.Instacne.m_ComboViewer.AddCombo();
+        }
 
         m_Health -= _Damage;
         if (m_Health <= 0.0f)
         {
             m_Live = E_Live.DEAD;
             m_Animator.CrossFade(m_AnimKeyDead, 0.15f);
+        }
+        else
+        {
+            if (m_UseHitAnimation)
+            {
+                m_HitMotion = true;
+                m_Animator.CrossFade(m_AnimKeyHit, 0.15f);
+            }
         }
     }
 
@@ -203,7 +222,8 @@ public class CharacterBase : MonoBehaviour
     public bool CheckMotionCancelAvailability(int _DecreaseGauge = 2)
     {
         if (GameManager.Instacne.m_Main.IsPlayStop() || GameManager.Instacne.m_Main.IsGameStop()) return false;
-
+        if (m_Live == E_Live.DEAD) return false;
+        if (m_HitMotion) return false;
         if (m_ActiveMotionRunning &&
             m_MotionCancelDelay <= 0.0f &&
             UIManager.Instacne.m_MotionCancelGauge.GetGauge() > 1)
@@ -219,6 +239,12 @@ public class CharacterBase : MonoBehaviour
     public virtual void MotionEnd(int _Value)
     {
         m_ActiveMotionRunning = false;
+    }
+
+    public virtual void HitEnd(int _Value)
+    {
+        m_HitMotion = false;
+        MotionEnd(_Value);
     }
 
     public void Revive()

@@ -108,11 +108,11 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
         for (int i = 0; i < colls.Length; ++i)
         {
             if (colls[i].gameObject == m_CharacterBase.gameObject) continue;
-            Debug.Log(colls[i].name);
-            CharacterBase character = colls[i].GetComponent<CharacterBase>();
+            CharacterBase character = colls[i].GetComponentInParent<CharacterBase>();
             if (!character) continue;
             if (m_CharacterBase.m_Live == CharacterBase.E_Live.DEAD) continue;
             if (m_CharacterBase.m_Team == character.m_Team) continue;
+            Debug.Log(colls[i].name);
             character.GiveToDamage(m_CharacterBase.m_CharacterID, _Damage);
             UIManager.Instacne.m_MotionCancelGauge.AddGauge(1);
             if (!hit)

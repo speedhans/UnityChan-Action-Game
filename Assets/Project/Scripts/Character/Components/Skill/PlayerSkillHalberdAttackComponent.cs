@@ -25,15 +25,11 @@ public class PlayerSkillHalberdAttackComponent : PlayerSkillBaseComponent
     {
         if (_Phase != InputActionPhase.Started) return;
         if (!CheckSkillAvailability()) return;
-        if (!AnimStateCheck()) return;
 
         if (CheckMotionCancelAvailability())
-        {
-            m_PlayerCharacter.StartMotionCancelRim(5.0f, 0.75f);
-            m_CharacterBase.m_Animator.CrossFade(m_AnimHash, 0.0f);
-        }
+            SkillAnimationPlay(true, 0.7f);
         else if (!DefaultStateCheck()) return;
-        m_CharacterBase.m_Animator.CrossFade(m_AnimHash, 0.15f);
+        else SkillAnimationPlay();
         m_PlayerCharacter.ActivateOnlyOneWeapon(13);
         SoundManager.Instance.PlayDefaultSound(m_PlayerCharacter.m_SkillAttackClip2);
         StartNewMotion();

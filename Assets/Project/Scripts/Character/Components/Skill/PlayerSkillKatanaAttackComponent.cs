@@ -24,15 +24,11 @@ public class PlayerSkillKatanaAttackComponent : PlayerSkillBaseComponent
     {
         if (_Phase != InputActionPhase.Started) return;
         if (!CheckSkillAvailability()) return;
-        if (!AnimStateCheck()) return;
 
         if (CheckMotionCancelAvailability())
-        {
-            m_PlayerCharacter.StartMotionCancelRim(5.0f, 0.75f);
-            m_CharacterBase.m_Animator.CrossFade(m_AnimHash, 0.0f);
-        }
+            SkillAnimationPlay(true, 0.4f);
         else if (!DefaultStateCheck()) return;
-        m_CharacterBase.m_Animator.CrossFade(m_AnimHash, 0.15f);
+        else SkillAnimationPlay();
         m_PlayerCharacter.ActivateOnlyOneWeapon(14);
         SoundManager.Instance.PlayDefaultSound(m_PlayerCharacter.m_SkillAttackClip2);
         StartNewMotion();
@@ -41,7 +37,7 @@ public class PlayerSkillKatanaAttackComponent : PlayerSkillBaseComponent
     void HitEvent()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(pos, 1.0f, 0.5f))
+        if (HitDamage(pos, 1.0f, 0.65f))
         {
             UIManager.Instacne.m_MotionCancelGauge.AddGauge(1);
 

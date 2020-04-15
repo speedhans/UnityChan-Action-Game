@@ -36,6 +36,7 @@ public class PlayerDashComponent : CharacterBaseComponent
         {
             m_PlayerCharacter.StartMotionCancelRim(5.0f, 0.5f);
             m_CharacterBase.m_Animator.CrossFade(m_DashAnimKey, 0.0f);
+            m_PlayerCharacter.CreateSpectrumMesh(1.0f, true, GameManager.Instacne.m_Main.m_SpectrumMaterial);
         }
         else if (!DefaultStateCheck()) return;
 

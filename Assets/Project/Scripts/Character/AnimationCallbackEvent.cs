@@ -7,6 +7,7 @@ public class AnimationCallbackEvent : MonoBehaviour
     CharacterBase m_Character;
 
     Dictionary<int, System.Action> m_MotionStartCallbackDic = new Dictionary<int, System.Action>();
+    Dictionary<int, System.Action> m_MotionEndCallbackDic = new Dictionary<int, System.Action>();
     Dictionary<int, System.Action> m_AttackHitCallbackDic = new Dictionary<int, System.Action>();
 
 
@@ -17,39 +18,26 @@ public class AnimationCallbackEvent : MonoBehaviour
 
     // 0 번은 default
 
-    public bool AddAttackHitEvent(int _Number1, int _Number2, System.Action _Function)
+    public bool AddAttackHitEvent(System.Action _Function, params int[] _Number)
     {
         bool result = true;
-        if (!AddAttackHitEvent(_Number1, _Function)) result = false;
-        if (!AddAttackHitEvent(_Number2, _Function))
+
+        for (int i = 0; i < _Number.Length; ++i)
         {
-            ReleaseAttackHitEvent(_Number1);
-            result = false;
+            if (!AddAttackHitEvent(_Function, _Number[i]))
+            {
+                for (int j = i; j > -1; --j)
+                {
+                    ReleaseAttackHitEvent(_Number[j]);
+                }
+                result = false;
+            }
         }
 
         return result;
     }
 
-    public bool AddAttackHitEvent(int _Number1, int _Number2, int _Number3, System.Action _Function)
-    {
-        bool result = true;
-        if (!AddAttackHitEvent(_Number1, _Function)) result = false;
-        if (!AddAttackHitEvent(_Number2, _Function))
-        {
-            ReleaseAttackHitEvent(_Number1);
-            result = false;
-        }
-        if (!AddAttackHitEvent(_Number3, _Function))
-        {
-            ReleaseAttackHitEvent(_Number2);
-            ReleaseAttackHitEvent(_Number1);
-            result = false;
-        }
-
-        return result;
-    }
-
-    public bool AddAttackHitEvent(int _Number, System.Action _Function)
+    public bool AddAttackHitEvent(System.Action _Function, int _Number)
     {
         System.Action action = null;
         if (m_AttackHitCallbackDic.TryGetValue(_Number, out action))
@@ -62,44 +50,33 @@ public class AnimationCallbackEvent : MonoBehaviour
         return true;
     }
 
-    public void ReleaseAttackHitEvent(int _Number)
+    public void ReleaseAttackHitEvent(params int[] _Number)
     {
-        m_AttackHitCallbackDic.Remove(_Number);
+        for (int i = 0; i < _Number.Length; ++i)
+        {
+            m_AttackHitCallbackDic.Remove(_Number[i]);
+        }
     }
 
-    public bool AddMotionStartEvent(int _Number1, int _Number2, System.Action _Function)
+    public bool AddMotionStartEvent(System.Action _Function, params int[] _Number)
     {
         bool result = true;
-        if (!AddMotionStartEvent(_Number1, _Function)) result = false;
-        if (!AddMotionStartEvent(_Number2, _Function))
+
+        for (int i = 0; i < _Number.Length; ++i)
         {
-            ReleaseAttackHitEvent(_Number1);
-            result = false;
+            if (!AddMotionStartEvent(_Function, _Number[i]))
+            {
+                for (int j = i; j > -1; --j)
+                {
+                    ReleaseMotionStartEvent(_Number[j]);
+                }
+                result = false;
+            }
         }
 
         return result;
     }
-
-    public bool AddMotionStartEvent(int _Number1, int _Number2, int _Number3, System.Action _Function)
-    {
-        bool result = true;
-        if (!AddMotionStartEvent(_Number1, _Function)) result = false;
-        if (!AddMotionStartEvent(_Number2, _Function))
-        {
-            ReleaseMotionStartEvent(_Number1);
-            result = false;
-        }
-        if (!AddMotionStartEvent(_Number3, _Function))
-        {
-            ReleaseAttackHitEvent(_Number2);
-            ReleaseAttackHitEvent(_Number1);
-            result = false;
-        }
-
-        return result;
-    }
-
-    public bool AddMotionStartEvent(int _Number, System.Action _Function)
+    public bool AddMotionStartEvent(System.Action _Function, int _Number)
     {
         System.Action action = null;
         if (m_MotionStartCallbackDic.TryGetValue(_Number, out action))
@@ -112,9 +89,51 @@ public class AnimationCallbackEvent : MonoBehaviour
         return true;
     }
 
-    public void ReleaseMotionStartEvent(int _Number)
+    public void ReleaseMotionStartEvent(params int[] _Number)
     {
-        m_MotionStartCallbackDic.Remove(_Number);
+        for (int i = 0; i < _Number.Length; ++i)
+        {
+            m_MotionStartCallbackDic.Remove(_Number[i]);
+        }
+    }
+
+    public bool AddMotionEndEvent(System.Action _Function, params int[] _Number)
+    {
+        bool result = true;
+
+        for (int i = 0; i < _Number.Length; ++i)
+        {
+            if (!AddMotionEndEvent(_Function, _Number[i]))
+            {
+                for (int j = i; j > -1; --j)
+                {
+                    ReleaseMotionEndEvent(_Number[j]);
+                }
+                result = false;
+            }
+        }
+
+        return result;
+    }
+    public bool AddMotionEndEvent(System.Action _Function, int _Number)
+    {
+        System.Action action = null;
+        if (m_MotionEndCallbackDic.TryGetValue(_Number, out action))
+        {
+            return false;
+        }
+
+        m_MotionEndCallbackDic.Add(_Number, _Function);
+
+        return true;
+    }
+
+    public void ReleaseMotionEndEvent(params int[] _Number)
+    {
+        for (int i = 0; i < _Number.Length; ++i)
+        {
+            m_MotionEndCallbackDic.Remove(_Number[i]);
+        }
     }
 
     public void FootL()
@@ -149,6 +168,12 @@ public class AnimationCallbackEvent : MonoBehaviour
 
     public void MotionEnd(int _Value)
     {
+        System.Action action = null;
+        if (m_MotionEndCallbackDic.TryGetValue(_Value, out action))
+        {
+            action.Invoke();
+        }
+
         m_Character.MotionEnd(_Value);
     }
 

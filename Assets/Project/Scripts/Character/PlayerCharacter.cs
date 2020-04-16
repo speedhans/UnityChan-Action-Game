@@ -5,6 +5,9 @@ using sunTT;
 
 public class PlayerCharacter : CharacterBase
 {
+    public float m_Stemina;
+    public float m_SteminaMax;
+
     public CameraAuthoring m_FollowCamera;
     public Transform m_FollowCameraAxis { get; protected set; }
     public CameraAuthoring m_FinishCamera;
@@ -57,6 +60,7 @@ public class PlayerCharacter : CharacterBase
     private void Start()
     {
         UIManager.Instacne.m_PlayerHPBar.SetCharacter(this);
+        UIManager.Instacne.m_PlayerSPBar.SetCharacter(this);
     }
 
     void SetHand()
@@ -88,6 +92,13 @@ public class PlayerCharacter : CharacterBase
         m_KatanaPrefab = Instantiate(m_KatanaPrefab, m_RightHandPoint);
         sunTTHelper.SetLocalTransformIdentity(m_KatanaPrefab.transform);
         m_KatanaPrefab.SetActive(false);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        AddStemina(2.0f * Time.deltaTime);
     }
 
     public void StartMotionCancelRim(float _Pow = 5.0f, float _Duration = 1.0f)
@@ -185,10 +196,22 @@ public class PlayerCharacter : CharacterBase
 
         if (m_UseHitAnimation)
         {
+            int number = Random.Range(0, 100);
+            SoundManager.Instance.PlayDefaultSound(number > 50 ? m_AudioListHit[0] : m_AudioListHit[1]);
             AllWeaponDisable();
         }
 
         base.GiveToDamage(_AttackerID, _Damage);
+    }
+
+    public void AddStemina(float _Value)
+    {
+        m_Stemina = Mathf.Clamp(m_Stemina + _Value, 0.0f, m_SteminaMax);
+    }
+
+    public void SubStemina(float _Value)
+    {
+        m_Stemina = Mathf.Clamp(m_Stemina - _Value, 0.0f, m_SteminaMax);
     }
 
     public void CreateSpectrumMesh(float _Duration, bool _AlphaDecrease, Material _Material)

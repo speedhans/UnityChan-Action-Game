@@ -12,7 +12,7 @@ public class PlayerSkillSwordAttackComponent : PlayerSkillBaseComponent
         m_HitEffectPrefabName = "SwordHitEffect";
 
         InputManager.Instacne.AddNumberKeyEvent(1, SwordAttack);
-        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(11, HitEvent);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent, 11);
     }
 
     public override void DestoryComponent()
@@ -39,7 +39,7 @@ public class PlayerSkillSwordAttackComponent : PlayerSkillBaseComponent
     {
         m_PlayerCharacter.m_Rigidbody.velocity = Vector3.zero;
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(pos, 1.0f, 0.5f))
+        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.5f))
         {
             UIManager.Instacne.m_MotionCancelGauge.AddGauge(1);
 

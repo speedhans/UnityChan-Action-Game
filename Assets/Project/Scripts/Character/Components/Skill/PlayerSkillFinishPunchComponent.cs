@@ -14,7 +14,7 @@ public class PlayerSkillFinishPunchComponent : PlayerSkillBaseComponent
         m_HitEffectPrefabName = "FinishPunchHitEffect";
 
         InputManager.Instacne.AddNumberKeyEvent(5, FinishPunch);
-        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(100, HitEvent);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent, 100);
     }
 
     public override void DestoryComponent()
@@ -45,7 +45,7 @@ public class PlayerSkillFinishPunchComponent : PlayerSkillBaseComponent
     void HitEvent()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(pos, 1.0f, 0.5f))
+        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.5f))
         {
             LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_HitEffectPrefabName);
             if (life)

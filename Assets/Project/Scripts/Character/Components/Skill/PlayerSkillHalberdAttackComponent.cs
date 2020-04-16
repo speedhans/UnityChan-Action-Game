@@ -12,7 +12,7 @@ public class PlayerSkillHalberdAttackComponent : PlayerSkillBaseComponent
         m_HitEffectPrefabName = "HalbertHitEffect";
 
         InputManager.Instacne.AddNumberKeyEvent(3, TwoHandHalberdAttack);
-        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(13, HitEvent);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent, 13);
     }
 
     public override void DestoryComponent()
@@ -38,7 +38,7 @@ public class PlayerSkillHalberdAttackComponent : PlayerSkillBaseComponent
     void HitEvent()
     {
         Vector3 pos = m_CharacterBase.transform.position + Vector3.up;
-        if (HitDamage(pos, m_PlayerCharacter.transform.forward, 1.0f, 0.5f, 1.0f))
+        if (HitDamage(m_CharacterBase, pos, m_PlayerCharacter.transform.forward, 1.0f, 0.5f, 1.0f))
         {
             UIManager.Instacne.m_MotionCancelGauge.AddGauge(1);
 

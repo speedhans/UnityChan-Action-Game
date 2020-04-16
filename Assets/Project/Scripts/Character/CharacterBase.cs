@@ -7,7 +7,7 @@ using sunTT;
 [RequireComponent(typeof(CapsuleCollider))]
 public class CharacterBase : MonoBehaviour, IDamage
 {
-    static public readonly int m_AnimKeyIdle = Animator.StringToHash("Idle");
+    static public readonly int m_AnimKeyIdle = Animator.StringToHash("Idle/MoveTree");
     static public readonly int m_AnimKeyMoveDirectionX = Animator.StringToHash("MoveDirectionX");
     static public readonly int m_AnimKeyMoveDirectionY = Animator.StringToHash("MoveDirectionY");
     static public readonly int m_AnimKeyDead = Animator.StringToHash("Dead");
@@ -68,6 +68,7 @@ public class CharacterBase : MonoBehaviour, IDamage
 
     public LayerMask m_EnemyLayerMask;
     public AudioClip[] m_AudioList;
+    public AudioClip[] m_AudioListHit;
 
     protected virtual void Awake()
     {

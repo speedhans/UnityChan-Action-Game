@@ -83,8 +83,9 @@
     <Compile Include="Assets\Project\Scripts\Character\Components\Skill\PlayerSkillTwoHandSwordAttackComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Enemy\Components\EnemyBaseComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Enemy\Components\EnemySearchComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonBaseComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonNormalAttackComponent.cs" />
-    <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDraonBaseComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonRotateComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\FireDragonCharacter.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Interface\IDamage.cs" />
     <Compile Include="Assets\Project\Scripts\Character\PlayerCharacter.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Assets\Project\Scripts\UI\ComboViewer.cs" />
     <Compile Include="Assets\Project\Scripts\UI\MotionCancelGauge.cs" />
     <Compile Include="Assets\Project\Scripts\UI\PlayerHPBar.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\PlayerSPBar.cs" />
     <Compile Include="Assets\Project\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Project\Scripts\Weapon\WeaponEffectController.cs" />
     <Compile Include="Assets\Project\Scripts\sunTTHelper.cs" />

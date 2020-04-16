@@ -12,7 +12,7 @@ public class PlayerSkillKatanaAttackComponent : PlayerSkillBaseComponent
         m_HitEffectPrefabName = "KatanaHitEffect";
 
         InputManager.Instacne.AddNumberKeyEvent(4, KatanaAttack);
-        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(14, HitEvent);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent, 14);
     }
 
     public override void DestoryComponent()
@@ -37,7 +37,7 @@ public class PlayerSkillKatanaAttackComponent : PlayerSkillBaseComponent
     void HitEvent()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(pos, 1.0f, 0.65f))
+        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.65f))
         {
             UIManager.Instacne.m_MotionCancelGauge.AddGauge(1);
 

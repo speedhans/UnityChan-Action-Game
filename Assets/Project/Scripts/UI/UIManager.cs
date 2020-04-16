@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     }
 
     public PlayerHPBar m_PlayerHPBar;
+    public PlayerSPBar m_PlayerSPBar;
     public MotionCancelGauge m_MotionCancelGauge;
     public ComboViewer m_ComboViewer;
 }

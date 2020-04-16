@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireDragonNormalAttackComponent : FireDraonBaseComponent
+public class FireDragonNormalAttackComponent : FireDragonBaseComponent
 {
     static readonly int m_AnimFrontAttack1 = Animator.StringToHash("HeadAttackFront");
     static readonly int m_AnimFrontAttack2 = Animator.StringToHash("HeadAttackLeft");
@@ -11,7 +11,12 @@ public class FireDragonNormalAttackComponent : FireDraonBaseComponent
     static readonly int m_AnimFrontTailAttack1 = Animator.StringToHash("TailAttackLeft");
     static readonly int m_AnimFrontTailAttack2 = Animator.StringToHash("TailAttackRight");
 
+    static readonly int m_AnimFrontWingAttack1 = Animator.StringToHash("WingAttackLeft");
+    static readonly int m_AnimFrontWingAttack2 = Animator.StringToHash("WingAttackRight");
+
     readonly string m_TailAttackSmokeEffectPrefab = "DragonTailAttackSmoke";
+    readonly string m_DragonHeadAttackHitPrefab = "DragonHeadAttackHit";
+    readonly string m_DragonWingAttackSmokePrefab = "DragonWingAttackSmoke";
 
     public float m_Cooldown = 5.0f;
     public float m_CooldownTimer = 1.0f;
@@ -19,12 +24,18 @@ public class FireDragonNormalAttackComponent : FireDraonBaseComponent
     public float m_MaxDistance = 5.5f;
     public float m_MinDistance = 3;
 
+    bool m_TailAttack = false;
+
+    HashSet<CharacterBase> m_DamageList = new HashSet<CharacterBase>();
+
     public override void Initialize(CharacterBase _CharacterBase)
     {
         base.Initialize(_CharacterBase);
-        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(1,2,3, FrontHeadHitEvent);
-        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(4,5, FrontTailHitEvent);
-        m_CharacterBase.m_AnimCallback.AddMotionStartEvent(4,5, FrontTailStart);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(FrontHeadHitEvent, 1, 2, 3);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(FrontWingAttackLeft, 6);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(FrontWingAttackRight, 7);
+        m_CharacterBase.m_AnimCallback.AddMotionStartEvent(FrontTailStart, 4, 5);
+        m_CharacterBase.m_AnimCallback.AddMotionEndEvent(FrontTailEnd, 4, 5);
     }
 
     public override void UpdateComponent(float _DeltaTime)
@@ -38,6 +49,7 @@ public class FireDragonNormalAttackComponent : FireDraonBaseComponent
         }
 
         if (!DefaultStateCheck()) return;
+        if (!DragonStateCheck()) return;
         if (!m_AICharacter.m_TargetCharacter) return;
 
         Vector3 direction = m_AICharacter.m_TargetCharacter.transform.position - m_AICharacter.transform.position;
@@ -57,25 +69,60 @@ public class FireDragonNormalAttackComponent : FireDraonBaseComponent
         m_CooldownTimer = m_Cooldown;
     }
 
+    public override void FixedUpdateComponent(float _FixedDeltaTime)
+    {
+        base.FixedUpdateComponent(_FixedDeltaTime);
+
+        if (m_TailAttack)
+        {
+            Vector3 dir = m_FireDragonCharacter.m_TailPoint[0].position - m_FireDragonCharacter.transform.position;
+            dir.y = 0.0f;
+            dir.Normalize();
+            HashSet<CharacterBase> list = OverlabShape(m_FireDragonCharacter, m_FireDragonCharacter.transform.position, dir, 2.5f, 6.5f);
+            foreach(CharacterBase c in list)
+            {
+                if (m_DamageList.Contains(c)) continue;
+                c.GiveToDamage(m_FireDragonCharacter.m_CharacterID, 5);
+                m_DamageList.Add(c);
+            }
+        }
+    }
+
     bool FrontAttack(Vector3 _Direction, float _Distance, float _AngleDot)
     {
         if (_Distance >= m_MinDistance && _Distance <= m_MaxDistance)
         {
-            if (_Distance > m_MaxDistance * 0.75f)
+            if (_Distance > m_MaxDistance * 0.75f) // Head Attack
             {
                 m_CharacterBase.m_Animator.CrossFade(m_AnimFrontAttack1, 0.15f);
             }
             else
             {
                 int number = Random.Range(0, 100);
-                if (number > 50)
-                    m_CharacterBase.m_Animator.CrossFade(m_AnimFrontAttack2, 0.15f);
-                else
-                    m_CharacterBase.m_Animator.CrossFade(m_AnimFrontAttack3, 0.15f);
+                if (number > 50) // Head Attack
+                {
+                    number = Random.Range(0, 100);
+                    if (number > 50)
+                        m_CharacterBase.m_Animator.CrossFade(m_AnimFrontAttack2, 0.15f);
+                    else
+                        m_CharacterBase.m_Animator.CrossFade(m_AnimFrontAttack3, 0.15f);
+                }
+                else // Wing Attack
+                {
+                    Vector3 dir = m_AICharacter.m_TargetCharacter.transform.position - m_CharacterBase.transform.position;
+                    dir.y = 0.0f;
+                    dir.Normalize();
+
+                    float dot = Vector3.Dot(m_AICharacter.transform.right, dir);
+                    if (dot > 0)
+                        m_CharacterBase.m_Animator.CrossFade(m_AnimFrontWingAttack2, 0.15f);
+                    else
+                        m_CharacterBase.m_Animator.CrossFade(m_AnimFrontWingAttack1, 0.15f);
+                }
             }
             return true;
         }
-        else if (_Distance < m_MinDistance)
+        else if (_Distance < m_MinDistance) // Tail Attack
         {
             float rightDot = Vector3.Dot(m_AICharacter.transform.right, _Direction.normalized);
             if (rightDot >= 0.0f)
@@ -101,14 +148,18 @@ public class FireDragonNormalAttackComponent : FireDraonBaseComponent
             SoundManager.Instance.PlayDefaultSound(m_CharacterBase.m_AudioList[1], 0.5f);
 
         Vector3 pos = m_FireDragonCharacter.m_HeadPoint.transform.position;
-        if (HitDamage(pos, 2, 0.75f))
+        if (HitDamage(m_CharacterBase, pos, 2, 0.75f))
         {
-            Debug.Log("Dragon Head Hit");
+            LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_DragonHeadAttackHitPrefab);
+            life.Initialize();
+            life.transform.position = pos;
+            life.gameObject.SetActive(true);
         }
     }
 
     void FrontTailStart()
     {
+        m_DamageList.Clear();
         SoundManager.Instance.PlayDefaultSound(m_CharacterBase.m_AudioList[2], 0.5f);
         for (int i = 0; i < m_FireDragonCharacter.m_TailPoint.Length; ++i)
         {
@@ -117,16 +168,31 @@ public class FireDragonNormalAttackComponent : FireDraonBaseComponent
             life.SetTargetTransform(m_FireDragonCharacter.m_TailPoint[i]);
             life.gameObject.SetActive(true);
         }
+        m_TailAttack = true;
     }
 
-    void FrontTailHitEvent()
+    void FrontTailEnd()
     {
+        m_TailAttack = false;
+        m_DamageList.Clear();
+    }
 
-        Vector3 pos = m_FireDragonCharacter.transform.position;
-        if (HitDamage(pos, 5, 6.5f))
-        {
-            Debug.Log("Dragon Tail Hit");
-        }
+    void FrontWingAttackLeft()
+    {
+        HitDamage(m_FireDragonCharacter, m_FireDragonCharacter.m_LeftHandPoint.transform.position, 5, 1);
+        LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_DragonWingAttackSmokePrefab);
+        life.Initialize();
+        life.transform.position = m_FireDragonCharacter.m_LeftHandPoint.transform.position + Vector3.down * 0.5f;
+        life.gameObject.SetActive(true);
+    }
+
+    void FrontWingAttackRight()
+    {
+        HitDamage(m_FireDragonCharacter, m_FireDragonCharacter.m_RightHandPoint.transform.position, 5, 1);
+        LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_DragonWingAttackSmokePrefab);
+        life.Initialize();
+        life.transform.position = m_FireDragonCharacter.m_RightHandPoint.transform.position + Vector3.down * 0.5f;
+        life.gameObject.SetActive(true);
     }
 
     bool BackAttack(Vector3 _Direction, float _Distance, float _AngleDot)

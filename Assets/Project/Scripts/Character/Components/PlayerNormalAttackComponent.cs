@@ -25,9 +25,9 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
 
         InputManager.Instacne.AddMouseEvent(0, MouseEvent);
 
-        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(1, HitEvent1);
-        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(2, HitEvent2);
-        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(3, HitEvent3);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent1, 1);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent2, 2);
+        m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent3, 3);
     }
 
     public override void UpdateComponent(float _DeltaTime)
@@ -86,57 +86,42 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
     void HitEvent1()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        HitDamage(pos, 1.0f, 0.35f, 1);
+        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.35f))
+        {
+            HitEffect(m_EffectPunchPrefab, m_CharacterBase.m_RightHandPoint.position);
+            m_PlayerCharacter.AddStemina(5);
+        }
     }
 
     void HitEvent2()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        HitDamage(pos, 1.0f, 0.35f, 2);
+        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.35f))
+        {
+            HitEffect(m_EffectPunchPrefab, m_CharacterBase.m_LeftHandPoint.position);
+            m_PlayerCharacter.AddStemina(7);
+        }
     }
 
     void HitEvent3()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        HitDamage(pos, 1.0f, 0.35f, 3);
+        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.35f))
+        {
+            HitEffect(m_EffectKickPrefab, pos);
+            m_PlayerCharacter.AddStemina(10);
+        }
     }
 
-    void HitDamage(Vector3 _CollisionPoint, float _Damage, float _Radius, int _Type)
+    void HitEffect(string _EffectPath, Vector3 _EffectPosition)
     {
-        bool hit = false;
-        Collider[] colls = Physics.OverlapSphere(_CollisionPoint, _Radius, m_CharacterBase.m_EnemyLayerMask);
-        for (int i = 0; i < colls.Length; ++i)
+        UIManager.Instacne.m_MotionCancelGauge.AddGauge(1);
+        LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(_EffectPath);
+        if (life)
         {
-            if (colls[i].gameObject == m_CharacterBase.gameObject) continue;
-            CharacterBase character = colls[i].GetComponentInParent<CharacterBase>();
-            if (!character) continue;
-            if (m_CharacterBase.m_Live == CharacterBase.E_Live.DEAD) continue;
-            if (m_CharacterBase.m_Team == character.m_Team) continue;
-            Debug.Log(colls[i].name);
-            character.GiveToDamage(m_CharacterBase.m_CharacterID, _Damage);
-            UIManager.Instacne.m_MotionCancelGauge.AddGauge(1);
-            if (!hit)
-            {
-                LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(_Type == 3 ? m_EffectKickPrefab : m_EffectPunchPrefab);
-                if (life)
-                {
-                    life.Initialize();
-                    switch(_Type)
-                    {
-                        case 1:
-                            life.transform.position = m_CharacterBase.m_RightHandPoint.position;
-                            break;
-                        case 2:
-                            life.transform.position = m_CharacterBase.m_LeftHandPoint.position;
-                            break;
-                        case 3:
-                            life.transform.position = _CollisionPoint;
-                            break;
-                    }
-                    life.gameObject.SetActive(true);
-                }
-                hit = true;
-            }
+            life.Initialize();
+            life.transform.position = _EffectPosition;
+            life.gameObject.SetActive(true);
         }
     }
 }

@@ -10,6 +10,7 @@ public class PlayerDashComponent : CharacterBaseComponent
     static public readonly string m_DashAxisKeyY = "DashDirectionY";
 
     public float m_DashSpeed = 10.0f;
+    public float m_DashSteminaPoint = 15.0f;
     PlayerCharacter m_PlayerCharacter;
 
     public override void Initialize(CharacterBase _CharacterBase)
@@ -31,9 +32,11 @@ public class PlayerDashComponent : CharacterBaseComponent
     {
         if (_Phase != InputActionPhase.Started) return;
         if (InputManager.Instacne.m_Move2D == Vector2.zero) return;
+        if (m_PlayerCharacter.m_Stemina < m_DashSteminaPoint) return;
         if (m_CharacterBase.m_IsDashing) return;
         if (CheckMotionCancelAvailability())
         {
+            m_PlayerCharacter.AllWeaponDisable();
             m_PlayerCharacter.StartMotionCancelRim(5.0f, 0.5f);
             m_CharacterBase.m_Animator.CrossFade(m_DashAnimKey, 0.0f);
             m_PlayerCharacter.CreateSpectrumMesh(1.0f, true, GameManager.Instacne.m_Main.m_SpectrumMaterial);
@@ -45,6 +48,7 @@ public class PlayerDashComponent : CharacterBaseComponent
         else
             m_CharacterBase.m_Animator.CrossFade(m_DashAnimKey, 0.05f);
 
+        m_PlayerCharacter.SubStemina(m_DashSteminaPoint);
         m_CharacterBase.m_ActiveMotionRunning = true;
         m_CharacterBase.m_IsDashing = true;
         m_CharacterBase.m_Animator.SetFloat(m_DashAxisKeyX, InputManager.Instacne.m_Move2D.x);

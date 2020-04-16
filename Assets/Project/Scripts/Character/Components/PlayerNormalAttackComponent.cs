@@ -86,7 +86,7 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
     void HitEvent1()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.35f))
+        if (HitDamage(m_CharacterBase, pos, new Vector3(0.35f, 1.0f, 0.4f), m_CharacterBase.transform.rotation, 1.0f))
         {
             HitEffect(m_EffectPunchPrefab, m_CharacterBase.m_RightHandPoint.position);
             m_PlayerCharacter.AddStemina(5);
@@ -96,7 +96,7 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
     void HitEvent2()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.35f))
+        if (HitDamage(m_CharacterBase, pos, new Vector3(0.35f, 1.0f, 0.4f), m_CharacterBase.transform.rotation, 1.0f))
         {
             HitEffect(m_EffectPunchPrefab, m_CharacterBase.m_LeftHandPoint.position);
             m_PlayerCharacter.AddStemina(7);
@@ -106,7 +106,7 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
     void HitEvent3()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.35f))
+        if (HitDamage(m_CharacterBase, pos, new Vector3(0.35f, 1.0f, 0.4f), m_CharacterBase.transform.rotation, 1.0f))//if (HitDamage(m_CharacterBase, pos, 1.0f, 0.45f))
         {
             HitEffect(m_EffectKickPrefab, pos);
             m_PlayerCharacter.AddStemina(10);

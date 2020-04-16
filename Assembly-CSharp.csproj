@@ -106,6 +106,8 @@
     <Compile Include="Assets\Project\Scripts\UI\MotionCancelGauge.cs" />
     <Compile Include="Assets\Project\Scripts\UI\PlayerHPBar.cs" />
     <Compile Include="Assets\Project\Scripts\UI\PlayerSPBar.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\SkillGroupUI.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\SkillUI.cs" />
     <Compile Include="Assets\Project\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Project\Scripts\Weapon\WeaponEffectController.cs" />
     <Compile Include="Assets\Project\Scripts\sunTTHelper.cs" />

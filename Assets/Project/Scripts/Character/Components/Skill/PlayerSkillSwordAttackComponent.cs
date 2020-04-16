@@ -10,9 +10,11 @@ public class PlayerSkillSwordAttackComponent : PlayerSkillBaseComponent
         base.Initialize(_CharacterBase);
         m_AnimHash = Animator.StringToHash("SwordAttack1");
         m_HitEffectPrefabName = "SwordHitEffect";
-
+        m_Sprite = Resources.Load<Sprite>("UI/Sword1");
         InputManager.Instacne.AddNumberKeyEvent(1, SwordAttack);
         m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent, 11);
+
+        UIManager.Instacne.m_SkillGroupUI.SetSkill(this, 0);
     }
 
     public override void DestoryComponent()

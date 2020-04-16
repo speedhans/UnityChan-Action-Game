@@ -10,9 +10,11 @@ public class PlayerSkillTwoHandSwordAttackComponent : PlayerSkillBaseComponent
         base.Initialize(_CharacterBase);
         m_AnimHash = Animator.StringToHash("TwoHandSwordAttack1");
         m_HitEffectPrefabName = "TwoHandSwordHitEffect";
-
+        m_Sprite = Resources.Load<Sprite>("UI/Sword2");
         InputManager.Instacne.AddNumberKeyEvent(2, TwoHandSwordAttack);
         m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent, 12);
+
+        UIManager.Instacne.m_SkillGroupUI.SetSkill(this, 1);
     }
 
     public override void DestoryComponent()

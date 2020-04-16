@@ -10,9 +10,11 @@ public class PlayerSkillKatanaAttackComponent : PlayerSkillBaseComponent
         base.Initialize(_CharacterBase);
         m_AnimHash = Animator.StringToHash("KatanaAttack1");
         m_HitEffectPrefabName = "KatanaHitEffect";
-
+        m_Sprite = Resources.Load<Sprite>("UI/Sword4");
         InputManager.Instacne.AddNumberKeyEvent(4, KatanaAttack);
         m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent, 14);
+
+        UIManager.Instacne.m_SkillGroupUI.SetSkill(this, 3);
     }
 
     public override void DestoryComponent()

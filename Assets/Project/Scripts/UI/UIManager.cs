@@ -22,4 +22,5 @@ public class UIManager : MonoBehaviour
     public PlayerSPBar m_PlayerSPBar;
     public MotionCancelGauge m_MotionCancelGauge;
     public ComboViewer m_ComboViewer;
+    public SkillGroupUI m_SkillGroupUI;
 }

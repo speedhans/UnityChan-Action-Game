@@ -37,7 +37,32 @@ public class CharacterBaseComponent
         for (int i = 0; i < colls.Length; ++i)
         {
             if (colls[i].gameObject == _Attacker.gameObject) continue;
-            CharacterBase character = colls[i].GetComponent<CharacterBase>();
+            CharacterBase character = colls[i].GetComponentInParent<CharacterBase>();
+            if (!character) continue;
+            if (_Attacker.m_Live == CharacterBase.E_Live.DEAD) continue;
+            if (_Attacker.m_Team == character.m_Team) continue;
+            damagehash.Add(character);
+        }
+
+        if (damagehash.Count > 0)
+        {
+            foreach (CharacterBase c in damagehash)
+            {
+                c.GiveToDamage(_Attacker.m_CharacterID, _Damage);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    static public bool HitDamage(CharacterBase _Attacker, Vector3 _Center, Vector3 _HalfExtents, Quaternion _Orientation, float _Damage)
+    {
+        HashSet<CharacterBase> damagehash = new HashSet<CharacterBase>();
+        Collider[] colls = Physics.OverlapBox(_Center, _HalfExtents, _Orientation, _Attacker.m_EnemyLayerMask);
+        for (int i = 0; i < colls.Length; ++i)
+        {
+            if (colls[i].gameObject == _Attacker.gameObject) continue;
+            CharacterBase character = colls[i].GetComponentInParent<CharacterBase>();
             if (!character) continue;
             if (_Attacker.m_Live == CharacterBase.E_Live.DEAD) continue;
             if (_Attacker.m_Team == character.m_Team) continue;
@@ -62,7 +87,7 @@ public class CharacterBaseComponent
         for (int i = 0; i < hits.Length; ++i)
         {
             if (hits[i].transform.gameObject == _Attacker.gameObject) continue;
-            CharacterBase character = hits[i].transform.GetComponent<CharacterBase>();
+            CharacterBase character = hits[i].transform.GetComponentInParent<CharacterBase>();
             if (!character) continue;
             if (_Attacker.m_Live == CharacterBase.E_Live.DEAD) continue;
             if (_Attacker.m_Team == character.m_Team) continue;
@@ -85,7 +110,7 @@ public class CharacterBaseComponent
         for (int i = 0; i < colls.Length; ++i)
         {
             if (colls[i].gameObject == _Attacker.gameObject) continue;
-            CharacterBase character = colls[i].GetComponent<CharacterBase>();
+            CharacterBase character = colls[i].GetComponentInParent<CharacterBase>();
             if (!character) continue;
             if (_Attacker.m_Live == CharacterBase.E_Live.DEAD) continue;
             if (_Attacker.m_Team == character.m_Team) continue;

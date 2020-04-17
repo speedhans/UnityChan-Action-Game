@@ -15,6 +15,7 @@ public class FireDragonBaseComponent : EnemyBaseComponent
     public bool DragonStateCheck()
     {
         if (m_FireDragonCharacter.m_IsRotating) return false;
+        if (m_FireDragonCharacter.m_IsAvoiding) return false;
 
         return true;
     }

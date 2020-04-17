@@ -1,5 +1,5 @@
 ﻿
 public interface IDamage
 {
-    void GiveToDamage(int _AttackerID, float _Damage);
+    void GiveToDamage(CharacterBase _Attacker, float _Damage, bool _Knockback = false);
 }

@@ -48,7 +48,7 @@ public class CharacterBaseComponent
         {
             foreach (CharacterBase c in damagehash)
             {
-                c.GiveToDamage(_Attacker.m_CharacterID, _Damage);
+                c.GiveToDamage(_Attacker, _Damage);
             }
             return true;
         }
@@ -73,7 +73,7 @@ public class CharacterBaseComponent
         {
             foreach (CharacterBase c in damagehash)
             {
-                c.GiveToDamage(_Attacker.m_CharacterID, _Damage);
+                c.GiveToDamage(_Attacker, _Damage);
             }
             return true;
         }
@@ -91,7 +91,7 @@ public class CharacterBaseComponent
             if (!character) continue;
             if (_Attacker.m_Live == CharacterBase.E_Live.DEAD) continue;
             if (_Attacker.m_Team == character.m_Team) continue;
-            character.GiveToDamage(_Attacker.m_CharacterID, _Damage);
+            character.GiveToDamage(_Attacker, _Damage);
             hit = true;
         }
 

@@ -138,14 +138,18 @@ public class AnimationCallbackEvent : MonoBehaviour
 
     public void FootL()
     {
-        if (m_Character.IsAI) return;
-        SoundManager.Instance.PlayDefaultSound(GameManager.Instacne.m_Main.m_FootClip1, 0.5f);
+        if (m_Character.IsAI)
+            SoundManager.Instance.Play3DSound(m_Character.transform.position, m_Character.m_AudioListFoot[0], 0.5f);
+        else
+            SoundManager.Instance.PlayDefaultSound(m_Character.m_AudioListFoot[0], 0.5f);
     }
 
     public void FootR()
     {
-        if (m_Character.IsAI) return;
-        SoundManager.Instance.PlayDefaultSound(GameManager.Instacne.m_Main.m_FootClip1, 0.5f);
+        if (m_Character.IsAI)
+            SoundManager.Instance.Play3DSound(m_Character.transform.position, m_Character.m_AudioListFoot[0], 0.5f);
+        else
+            SoundManager.Instance.PlayDefaultSound(m_Character.m_AudioListFoot[0], 0.5f);
     }
 
     public void AttackHit(int _Value)

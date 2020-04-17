@@ -179,9 +179,10 @@ public class PlayerCharacter : CharacterBase
         }
     }
 
-    public override void GiveToDamage(int _AttackerID, float _Damage)
+    public override void GiveToDamage(CharacterBase _Attacker, float _Damage, bool _Knockback = false)
     {
         if (m_Immortal) return;
+        if (m_Down) return;
 
         if (m_IsDashing)
         {
@@ -196,12 +197,19 @@ public class PlayerCharacter : CharacterBase
 
         if (m_UseHitAnimation)
         {
-            int number = Random.Range(0, 100);
-            SoundManager.Instance.PlayDefaultSound(number > 50 ? m_AudioListHit[0] : m_AudioListHit[1]);
+            if (!_Knockback)
+            {
+                int number = Random.Range(0, 100);
+                SoundManager.Instance.PlayDefaultSound(number > 50 ? m_AudioListHit[0] : m_AudioListHit[1]);
+            }
+            else
+            {
+                SoundManager.Instance.PlayDefaultSound(m_AudioListHit[2]);
+            }
             AllWeaponDisable();
         }
 
-        base.GiveToDamage(_AttackerID, _Damage);
+        base.GiveToDamage(_Attacker, _Damage, _Knockback);
     }
 
     public void AddStemina(float _Value)

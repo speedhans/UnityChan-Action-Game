@@ -15,6 +15,7 @@ public class FireDragonNormalAttackComponent : FireDragonBaseComponent
     static readonly int m_AnimFrontWingAttack2 = Animator.StringToHash("WingAttackRight");
 
     readonly string m_TailAttackSmokeEffectPrefab = "DragonTailAttackSmoke";
+    readonly string m_TailAttackHitEffectPrefab = "DragonTailHit";
     readonly string m_DragonHeadAttackHitPrefab = "DragonHeadAttackHit";
     readonly string m_DragonWingAttackSmokePrefab = "DragonWingAttackSmoke";
 
@@ -52,17 +53,18 @@ public class FireDragonNormalAttackComponent : FireDragonBaseComponent
         if (!DragonStateCheck()) return;
         if (!m_AICharacter.m_TargetCharacter) return;
 
-        Vector3 direction = m_AICharacter.m_TargetCharacter.transform.position - m_AICharacter.transform.position;
-        float distance = direction.magnitude;
-        float angleDot = Vector3.Dot(m_AICharacter.transform.forward, direction.normalized);
+        Vector3 direction = m_AICharacter.GetTargetData().Direction;
+        float distance = m_AICharacter.GetTargetData().Distance;
+        float angle = m_AICharacter.GetTargetData().AngleBetweenTarget;
 
-        if (angleDot < 0.0f) // 뒤쪽일때의 로직
+        if (angle <= 90.0f) // 앞쪽일때의 로직
         {
-            if (!BackAttack(direction, distance, angleDot)) return;
+            if (!FrontAttack(direction, distance, angle)) return;
         }
-        else // 앞쪽일때의 로직
+        else // 뒤쪽일때의 로직
         {
-            if (!FrontAttack(direction, distance, angleDot)) return;
+            if (!BackAttack(direction, distance, angle)) return;
+            return;
         }
 
         StartNewMotion();
@@ -82,13 +84,18 @@ public class FireDragonNormalAttackComponent : FireDragonBaseComponent
             foreach(CharacterBase c in list)
             {
                 if (m_DamageList.Contains(c)) continue;
-                c.GiveToDamage(m_FireDragonCharacter.m_CharacterID, 5);
+                c.GiveToDamage(m_FireDragonCharacter, 5, true);
                 m_DamageList.Add(c);
+
+                LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_TailAttackHitEffectPrefab);
+                life.Initialize();
+                life.transform.position = c.transform.position + Vector3.up;
+                life.gameObject.SetActive(true);
             }
         }
     }
 
-    bool FrontAttack(Vector3 _Direction, float _Distance, float _AngleDot)
+    bool FrontAttack(Vector3 _Direction, float _Distance, float _Angle)
     {
         if (_Distance >= m_MinDistance && _Distance <= m_MaxDistance)
         {

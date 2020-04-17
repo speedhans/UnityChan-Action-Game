@@ -76,7 +76,10 @@ public class WeaponEffectController : MonoBehaviour
         {
             m_TrailEnableTimer -= deltatime;
             if (m_TrailEnableTimer <= 0.0f)
+            {
+                m_Trail.Activate();
                 m_Trail.gameObject.SetActive(true);
+            }
         }
     }
 }

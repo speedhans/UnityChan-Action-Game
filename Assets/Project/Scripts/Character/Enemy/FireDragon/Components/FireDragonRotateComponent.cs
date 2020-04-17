@@ -19,21 +19,17 @@ public class FireDragonRotateComponent : FireDragonBaseComponent
         base.FixedUpdateComponent(_FixedDeltaTime);
         if (!m_AICharacter.m_TargetCharacter) return;
         if (!DefaultStateCheck()) return;
+        if (m_FireDragonCharacter.m_IsAvoiding) return;
 
-        Vector3 dir = m_AICharacter.m_TargetCharacter.transform.position - m_AICharacter.transform.position;
-        dir.y = 0.0f;
-        dir.Normalize();
-        float dot = Vector3.Dot(m_AICharacter.transform.forward, dir);
-        float angle = (1.0f - ((dot + 1.0f) * 0.5f)) * 180.0f;
+        float angle = m_AICharacter.GetTargetData().AngleBetweenTarget;
 
         if (!m_FireDragonCharacter.m_IsRotating)
         {
-            if (angle > 5.0f)
+            if (angle > 2.0f)
             {
                 m_FireDragonCharacter.m_IsRotating = true;
                 m_AICharacter.m_Animator.applyRootMotion = true;
-                float rdot = Vector3.Dot(m_AICharacter.transform.right, dir);
-                AnimatorStateInfo info = m_AICharacter.m_Animator.GetCurrentAnimatorStateInfo(0);
+                float rdot = Vector3.Dot(m_AICharacter.transform.right, m_AICharacter.GetTargetData().DirectionNormalize2D);
                 if (rdot > 0.0f)
                 {
                     m_AICharacter.m_Animator.CrossFade(m_AnimKeyTurnRight, 0.15f);
@@ -44,13 +40,14 @@ public class FireDragonRotateComponent : FireDragonBaseComponent
                 }
             }
         }
-        else if (angle < 0.5f)
+        else if (angle < 0.1f)
         {
             if (m_AICharacter.m_Animator.applyRootMotion)
             {
                 m_AICharacter.m_Animator.applyRootMotion = false;
                 m_AICharacter.m_Animator.CrossFade(CharacterBase.m_AnimKeyIdle, 0.15f);
                 m_FireDragonCharacter.m_IsRotating = false;
+                m_FireDragonCharacter.transform.forward = m_AICharacter.GetTargetData().DirectionNormalize2D;
             }
         }
     }

@@ -9,6 +9,8 @@ public class AnimAudioPlay : StateMachineBehaviour
     [SerializeField]
     float m_Volume = 1.0f;
     [SerializeField]
+    bool m_3D = false;
+    [SerializeField]
     float m_PlayNormalizeFrame;
     bool m_Enable = false;
 
@@ -22,6 +24,9 @@ public class AnimAudioPlay : StateMachineBehaviour
         if (!m_Enable) return;
         if (stateInfo.normalizedTime <= m_PlayNormalizeFrame) return;
         m_Enable = false;
-        SoundManager.Instance.PlayDefaultSound(m_Clip, m_Volume);
+        if (m_3D)
+            SoundManager.Instance.Play3DSound(animator.transform.position, m_Clip, m_Volume);
+        else
+            SoundManager.Instance.PlayDefaultSound(m_Clip, m_Volume);
     }
 }

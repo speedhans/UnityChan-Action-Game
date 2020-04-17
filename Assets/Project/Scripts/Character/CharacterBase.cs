@@ -12,6 +12,9 @@ public class CharacterBase : MonoBehaviour, IDamage
     static public readonly int m_AnimKeyMoveDirectionY = Animator.StringToHash("MoveDirectionY");
     static public readonly int m_AnimKeyDead = Animator.StringToHash("Dead");
     static public readonly int m_AnimKeyHit = Animator.StringToHash("Hit");
+    static public readonly int m_AnimKeyHitAirStart = Animator.StringToHash("HitAir start");
+    static public readonly int m_AnimKeyHitAirEnd = Animator.StringToHash("HitAir end");
+
     public enum E_Team
     {
         RED,
@@ -60,6 +63,8 @@ public class CharacterBase : MonoBehaviour, IDamage
     public bool m_IsDashing = false;
     [HideInInspector]
     public bool m_HitMotion = false;
+    [HideInInspector]
+    public bool m_Down = false;
     [SerializeField]
     protected bool m_UseHitAnimation = false;
 
@@ -69,6 +74,7 @@ public class CharacterBase : MonoBehaviour, IDamage
     public LayerMask m_EnemyLayerMask;
     public AudioClip[] m_AudioList;
     public AudioClip[] m_AudioListHit;
+    public AudioClip[] m_AudioListFoot;
 
     protected virtual void Awake()
     {
@@ -189,11 +195,12 @@ public class CharacterBase : MonoBehaviour, IDamage
         }
     }
 
-    public virtual void GiveToDamage(int _AttackerID, float _Damage)
+    public virtual void GiveToDamage(CharacterBase _Attacker, float _Damage, bool _Knockback = false)
     {
         if (m_Live == E_Live.DEAD) return;
         if (m_Immortal) return;
-        if (_AttackerID == 0)
+        if (m_Down) return;
+        if (_Attacker.m_CharacterID == 0)
         {
             UIManager.Instacne.m_ComboViewer.AddCombo();
         }
@@ -209,8 +216,40 @@ public class CharacterBase : MonoBehaviour, IDamage
             if (m_UseHitAnimation)
             {
                 m_HitMotion = true;
-                m_Animator.CrossFade(m_AnimKeyHit, 0.15f);
+                if (!_Knockback)
+                    m_Animator.CrossFade(m_AnimKeyHit, 0.15f);
+                else
+                {
+                    m_Down = true;
+                    Vector3 dir = (_Attacker.transform.position - transform.position);
+                    dir.y = 0.0f;
+                    dir.Normalize();
+                    transform.forward = dir;
+                    m_Rigidbody.velocity = (-dir * Mathf.Clamp((_Damage * 1.25f), 0.0f, 10.0f)) + (Vector3.up * Mathf.Clamp(_Damage * 0.5f, 1.5f, 2.5f));
+                    m_Animator.CrossFade(m_AnimKeyHitAirStart, 0.15f);
+                    StartCoroutine(C_HitAirCollision());
+                }
             }
+        }
+    }
+
+    IEnumerator C_HitAirCollision()
+    {
+        int targetlayer = 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Obstacle");
+        while (true)
+        {
+            float distanceToPoint = m_CapsuleCollider.height / 2.0f - m_CapsuleCollider.radius;
+            Vector3 point1 = transform.position + m_CapsuleCollider.center + (Vector3.up * distanceToPoint * 1.05f);
+            Vector3 point2 = transform.position + m_CapsuleCollider.center - (Vector3.up * distanceToPoint * 1.05f);
+            float radius = m_CapsuleCollider.radius * 0.95f;
+
+            Collider[] colls = Physics.OverlapCapsule(point1, point2, radius, targetlayer);
+            if (colls.Length > 0)
+            {
+                m_Animator.CrossFade(m_AnimKeyHitAirEnd, 0.15f);
+                yield break;
+            }
+            yield return null;
         }
     }
 
@@ -245,6 +284,7 @@ public class CharacterBase : MonoBehaviour, IDamage
     public virtual void HitEnd(int _Value)
     {
         m_HitMotion = false;
+        m_Down = false;
         MotionEnd(_Value);
     }
 

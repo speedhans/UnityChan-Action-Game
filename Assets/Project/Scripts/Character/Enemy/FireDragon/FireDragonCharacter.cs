@@ -5,10 +5,14 @@ using UnityEngine;
 public class FireDragonCharacter : AICharacter
 {
     public Transform m_HeadPoint;
+    public Transform m_BreathPoint;
+    public Transform m_BreathPoint2;
     public Transform[] m_TailPoint;
 
     [HideInInspector]
     public bool m_IsRotating = false;
+    [HideInInspector]
+    public bool m_IsAvoiding = false;
     protected override void Awake()
     {
         base.Awake();
@@ -17,7 +21,16 @@ public class FireDragonCharacter : AICharacter
         m_RightHandPoint = FindBone(m_Animator.transform, "RightHandPoint");
 
         SetComponent<EnemySearchComponent>(this);
+        SetComponent<FireDragonAvoidComponent>(this);
         SetComponent<FireDragonRotateComponent>(this);
         SetComponent<FireDragonNormalAttackComponent>(this);
+        SetComponent<FireDragonBreathComponent>(this);
+    }
+
+    public override void ResetState()
+    {
+        base.ResetState();
+        m_IsRotating = false;
+        m_IsAvoiding = false;
     }
 }

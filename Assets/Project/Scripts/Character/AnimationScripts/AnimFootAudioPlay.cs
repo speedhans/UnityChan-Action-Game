@@ -5,7 +5,11 @@ using UnityEngine;
 public class AnimFootAudioPlay : StateMachineBehaviour
 {
     [SerializeField]
+    AudioClip m_Clip;
+    [SerializeField]
     float m_Volume = 1.0f;
+    [SerializeField]
+    bool m_3D = false;
     [SerializeField]
     float m_PlayNormalizeFrame;
     float m_CurrentFrame = 0.0f;
@@ -29,7 +33,10 @@ public class AnimFootAudioPlay : StateMachineBehaviour
         if (x < 0.3f && y < 0.3f) return;
         if (normalizeTime <= m_PlayNormalizeFrame) return;
         m_Enable = false;
-        Debug.Log("Foot");
-        SoundManager.Instance.PlayDefaultSound(GameManager.Instacne.m_Main.m_FootClip1, m_Volume);
+
+        if (m_3D)
+            SoundManager.Instance.Play3DSound(animator.transform.position, m_Clip == null ? GameManager.Instacne.m_Main.m_FootClip1 : m_Clip, m_Volume);
+        else
+            SoundManager.Instance.PlayDefaultSound(m_Clip == null ? GameManager.Instacne.m_Main.m_FootClip1 : m_Clip, m_Volume);
     }
 }

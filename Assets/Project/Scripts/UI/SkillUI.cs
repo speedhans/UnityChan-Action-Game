@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class SkillUI : MonoBehaviour
 {
+    [SerializeField]
     UnityEngine.UI.Image m_BackImage;
+    [SerializeField]
     UnityEngine.UI.Image m_FillImage;
 
     PlayerSkillBaseComponent m_SkillComponent;
-    private void Awake()
-    {
-        m_BackImage = transform.Find("Background").GetComponent<UnityEngine.UI.Image>();
-        m_FillImage = transform.Find("Fill").GetComponent<UnityEngine.UI.Image>();
-    }
 
     private void Update()
     {

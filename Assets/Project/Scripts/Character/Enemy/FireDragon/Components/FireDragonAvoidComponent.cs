@@ -7,12 +7,13 @@ public class FireDragonAvoidComponent : FireDragonBaseComponent
     static readonly int m_AnimAvoidLeft = Animator.StringToHash("AvoidLeft");
     static readonly int m_AnimAvoidRight = Animator.StringToHash("AvoidRight");
 
-    float m_AvoidMinDistance = 4.0f;
-    float m_AvoidCooldown = 10.0f;
+    float m_AvoidMaxDistance = 10.0f;
+    float m_AvoidCooldown = 7.0f;
     float m_AvoidCooldownTimer;
     public override void Initialize(CharacterBase _CharacterBase)
     {
         base.Initialize(_CharacterBase);
+        m_Frequency = 40;
         m_CharacterBase.m_AnimCallback.AddMotionEndEvent(AvoidEnd, 51,52);
     }
 
@@ -29,8 +30,12 @@ public class FireDragonAvoidComponent : FireDragonBaseComponent
         if (!DefaultStateCheck()) return;
         if (!DragonStateCheck()) return;
         if (!m_AICharacter.m_TargetCharacter) return;
-        if (m_AICharacter.GetTargetData().Distance > m_AvoidMinDistance) return;
-        if (Random.Range(0, 100) > 33) return;
+        if (m_AICharacter.GetTargetData().Distance > m_AvoidMaxDistance) return;
+        if (!CalculateFrequency())
+        {
+            m_AvoidCooldownTimer = m_AvoidCooldown * 0.3f;
+            return;
+        }
 
         StartNewMotion();
         m_AvoidCooldownTimer = m_AvoidCooldown;
@@ -53,7 +58,7 @@ public class FireDragonAvoidComponent : FireDragonBaseComponent
 
     void AvoidEnd()
     {
-        m_AICharacter.m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        m_AICharacter.m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
         //m_AICharacter.m_Animator.applyRootMotion = false;
         m_FireDragonCharacter.m_IsAvoiding = false;
     }

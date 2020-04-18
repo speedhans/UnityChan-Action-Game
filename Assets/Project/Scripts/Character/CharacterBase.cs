@@ -70,6 +70,8 @@ public class CharacterBase : MonoBehaviour, IDamage
 
     [HideInInspector]
     public bool m_Immortal = false;
+    [HideInInspector]
+    public bool m_StopCharacter = false;
 
     public LayerMask m_EnemyLayerMask;
     public AudioClip[] m_AudioList;
@@ -263,6 +265,7 @@ public class CharacterBase : MonoBehaviour, IDamage
     {
         if (GameManager.Instacne.m_Main.IsPlayStop() || GameManager.Instacne.m_Main.IsGameStop()) return false;
         if (m_Live == E_Live.DEAD) return false;
+        if (m_StopCharacter) return false;
         if (m_HitMotion) return false;
         if (m_ActiveMotionRunning &&
             m_MotionCancelDelay <= 0.0f &&

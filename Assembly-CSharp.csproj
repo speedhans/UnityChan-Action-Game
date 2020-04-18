@@ -67,6 +67,7 @@
     <Compile Include="Assets\Project\Scripts\Character\AnimationCallbackEvent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\AnimAudioPlay.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\AnimFootAudioPlay.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\AnimObjectSpawn.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\DashTree.cs" />
     <Compile Include="Assets\Project\Scripts\Character\CharacterBase.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Components\CharacterBaseComponent.cs" />
@@ -86,8 +87,11 @@
     <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonAvoidComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonBaseComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonBreathComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonDashComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonMiniMeteorComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonNormalAttackComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\FireDragonRotateComponent.cs" />
+    <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\Components\SubComponent\MiniMeteorComponent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\FireDragonCharacter.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Interface\IDamage.cs" />
     <Compile Include="Assets\Project\Scripts\Character\PlayerCharacter.cs" />

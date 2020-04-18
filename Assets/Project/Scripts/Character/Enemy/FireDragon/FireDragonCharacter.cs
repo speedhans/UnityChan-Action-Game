@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FireDragonCharacter : AICharacter
 {
+    public AudioClip m_RoarClip;
+
     public Transform m_HeadPoint;
     public Transform m_BreathPoint;
     public Transform m_BreathPoint2;
@@ -13,6 +15,7 @@ public class FireDragonCharacter : AICharacter
     public bool m_IsRotating = false;
     [HideInInspector]
     public bool m_IsAvoiding = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -25,6 +28,8 @@ public class FireDragonCharacter : AICharacter
         SetComponent<FireDragonRotateComponent>(this);
         SetComponent<FireDragonNormalAttackComponent>(this);
         SetComponent<FireDragonBreathComponent>(this);
+        SetComponent<FireDragonDashComponent>(this);
+        SetComponent<FireDragonMiniMeteorComponent>(this);
     }
 
     public override void ResetState()
@@ -32,5 +37,6 @@ public class FireDragonCharacter : AICharacter
         base.ResetState();
         m_IsRotating = false;
         m_IsAvoiding = false;
+        m_IsDashing = false;
     }
 }

@@ -7,8 +7,6 @@ public class FireDragonRotateComponent : FireDragonBaseComponent
     static int m_AnimKeyTurnLeft = Animator.StringToHash("TurnLeft");
     static int m_AnimKeyTurnRight = Animator.StringToHash("TurnRight");
 
-    public float m_RotateSpeed = 180.0f;
-
     public override void Initialize(CharacterBase _CharacterBase)
     {
         base.Initialize(_CharacterBase);

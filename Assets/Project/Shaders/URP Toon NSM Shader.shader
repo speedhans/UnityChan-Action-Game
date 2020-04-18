@@ -193,18 +193,27 @@
 #ifdef _ADDITIONAL_LIGHTS // 추가 광원 계산
                 int additionalLightsCount = GetAdditionalLightsCount();
 
-                for (int j = 0; j < additionalLightsCount; ++j)
+                if (additionalLightsCount > 0)
                 {
-                    // GetMainLight와 비슷하지만 for-loop 인덱스가 필요합니다.
-                    // 이것은 오브젝트 별 라이트 인덱스를 알아 내고 라이트 구조체를 초기화하기 위해 라이트 버퍼를 샘플링합니다.
-                    // _ADDITIONAL_LIGHT_SHADOWS가 정의 된 경우 그림자도 계산합니다.
+                    half3 additionalcolor;
+                    half AddSA;
+                    for (int j = 0; j < additionalLightsCount; ++j)
+                    {
+                        // GetMainLight와 비슷하지만 for-loop 인덱스가 필요합니다.
+                        // 이것은 오브젝트 별 라이트 인덱스를 알아 내고 라이트 구조체를 초기화하기 위해 라이트 버퍼를 샘플링합니다.
+                        // _ADDITIONAL_LIGHT_SHADOWS가 정의 된 경우 그림자도 계산합니다.
 
-                    Light light = GetAdditionalLight(j, positionWS);
-                    // Same functions used to shade the main light.
-                    basecolor += light.color * dot(normalWS, light.direction) * light.shadowAttenuation;
-                    SA += light.shadowAttenuation * light.distanceAttenuation;
+                        Light light = GetAdditionalLight(j, positionWS);
+                        // Same functions used to shade the main light.
+                        additionalcolor += light.color * dot(normalWS, light.direction) * light.shadowAttenuation * light.distanceAttenuation;
+                        AddSA += light.shadowAttenuation * light.distanceAttenuation;
+                    }
+                    AddSA /= additionalLightsCount;
+                    additionalcolor /= additionalLightsCount;
+
+                    SA += AddSA;
+                    basecolor += additionalcolor;
                 }
-                SA /= (half)(additionalLightsCount + 1);
 #endif
                 half3 viewDirectionWS = SafeNormalize(GetCameraPositionWS() - positionWS); // 카메라 뷰 가져오기
 

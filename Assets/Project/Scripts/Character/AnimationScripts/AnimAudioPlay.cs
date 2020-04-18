@@ -12,18 +12,29 @@ public class AnimAudioPlay : StateMachineBehaviour
     bool m_3D = false;
     [SerializeField]
     float m_PlayNormalizeFrame;
+    float m_CurrentFrame;
     bool m_Enable = false;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         m_Enable = true;
+        m_CurrentFrame = 0.0f;
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        float frame = stateInfo.normalizedTime;
+        if (frame > 1.0f)
+        {
+            frame = frame - Mathf.Floor(frame);
+            if (frame < m_CurrentFrame)
+                m_Enable = true;
+        }
+        m_CurrentFrame = frame;
         if (!m_Enable) return;
-        if (stateInfo.normalizedTime <= m_PlayNormalizeFrame) return;
+        if (m_CurrentFrame <= m_PlayNormalizeFrame) return;
         m_Enable = false;
+
         if (m_3D)
             SoundManager.Instance.Play3DSound(animator.transform.position, m_Clip, m_Volume);
         else

@@ -9,12 +9,12 @@ public class FireDragonBreathComponent : FireDragonBaseComponent
     readonly string m_BreathFirePrefab = "BreathFire";
     readonly string m_BreathHitEffectPrefab = "BreathHitEffect";
 
-    public float m_UseMinDistance = 7.0f;
-    public float m_UseMaxDistance = 20.0f;
+    public float m_UseMinDistance = 6.0f;
+    public float m_UseMaxDistance = 25.0f;
 
     public float m_Damage = 10.0f;
-    public float m_Cooldown;
-    public float m_CooldownTimer = 10.0f;
+    public float m_Cooldown = 8.0f;
+    public float m_CooldownTimer;
 
     bool m_EnableBreath = false;
     Transform m_CurrentBreathPoint;
@@ -22,7 +22,7 @@ public class FireDragonBreathComponent : FireDragonBaseComponent
     public override void Initialize(CharacterBase _CharacterBase)
     {
         base.Initialize(_CharacterBase);
-
+        m_Frequency = 60;
         m_CharacterBase.m_AnimCallback.AddAttackHitEvent(BreathStart, 101, 102);
         m_CharacterBase.m_AnimCallback.AddMotionEndEvent(BreathEnd, 101, 102);
     }
@@ -60,9 +60,9 @@ public class FireDragonBreathComponent : FireDragonBaseComponent
     {
         base.FixedUpdateComponent(_FixedDeltaTime);
 
-        if (m_Cooldown > 0.0f)
+        if (m_CooldownTimer > 0.0f)
         {
-            m_Cooldown -= _FixedDeltaTime;
+            m_CooldownTimer -= _FixedDeltaTime;
             return;
         }
         if (!DefaultStateCheck()) return;
@@ -72,6 +72,11 @@ public class FireDragonBreathComponent : FireDragonBaseComponent
         if (data.AngleBetweenTarget > 3.0f) return;
         if (data.Distance < m_UseMinDistance ||
             data.Distance > m_UseMaxDistance * 0.75) return;
+        if (!CalculateFrequency())
+        {
+            m_CooldownTimer = m_Cooldown * 0.3f;
+            return;
+        }
 
         int r = Random.Range(0, 100);
         if (data.AngleBetweenTarget < 0.1f && r > 50)
@@ -84,7 +89,7 @@ public class FireDragonBreathComponent : FireDragonBaseComponent
             m_CurrentBreathPoint = m_FireDragonCharacter.m_BreathPoint2;
             m_CharacterBase.m_Animator.CrossFade(m_AnimBreathSwipe, 0.15f);
         }
-        m_Cooldown = m_CooldownTimer;
+        m_CooldownTimer = m_Cooldown;
         StartNewMotion();
     }
 

@@ -26,14 +26,21 @@ public class AICharacter : CharacterBase
     {
         if (m_TargetCharacter)
         {
-            S_TargetData data;
-            data.Direction = m_TargetCharacter.transform.position - transform.position;
-            data.DirectionNormalize = data.Direction.normalized;
-            data.DirectionNormalize2D = new Vector3(data.Direction.x, 0.0f, data.Direction.z).normalized;
-            float dot = Vector3.Dot(transform.forward, data.DirectionNormalize2D);
-            data.AngleBetweenTarget = (1.0f - ((dot + 1.0f) * 0.5f)) * 180.0f;
-            data.Distance = data.Direction.magnitude;
-            m_TargetData = data;
+            if (m_TargetCharacter.m_Live == E_Live.DEAD)
+            {
+                m_TargetCharacter = null;
+            }
+            else
+            {
+                S_TargetData data;
+                data.Direction = m_TargetCharacter.transform.position - transform.position;
+                data.DirectionNormalize = data.Direction.normalized;
+                data.DirectionNormalize2D = new Vector3(data.Direction.x, 0.0f, data.Direction.z).normalized;
+                float dot = Vector3.Dot(transform.forward, data.DirectionNormalize2D);
+                data.AngleBetweenTarget = (1.0f - ((dot + 1.0f) * 0.5f)) * 180.0f;
+                data.Distance = data.Direction.magnitude;
+                m_TargetData = data;
+            }
         }
 
         base.Update();

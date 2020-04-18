@@ -15,6 +15,7 @@ public class PlayerSkillFinishPunchComponent : PlayerSkillBaseComponent
 
         InputManager.Instacne.AddNumberKeyEvent(5, FinishPunch);
         m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent, 100);
+        m_CharacterBase.m_AnimCallback.AddMotionEndEvent(FinishPunchEnd, 100);
     }
 
     public override void DestoryComponent()
@@ -39,6 +40,8 @@ public class PlayerSkillFinishPunchComponent : PlayerSkillBaseComponent
         SoundManager.Instance.PlayDefaultSound(m_PlayerCharacter.m_FinishAttackClip1);
         StartNewMotion();
 
+        m_PlayerCharacter.m_Immortal = true;
+        m_PlayerCharacter.m_StopCharacter = true;
         m_PlayerCharacter.m_FinishCamera.SetFocus();
     }
 
@@ -55,5 +58,11 @@ public class PlayerSkillFinishPunchComponent : PlayerSkillBaseComponent
                 life.gameObject.SetActive(true);
             }
         }
+    }
+
+    void FinishPunchEnd()
+    {
+        m_PlayerCharacter.m_Immortal = false;
+        m_PlayerCharacter.m_StopCharacter = false;
     }
 }

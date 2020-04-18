@@ -2461,8 +2461,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8701282384282290047}
-  - component: {fileID: 8733198945961161407}
-  - component: {fileID: 8734642425221175685}
   m_Layer: 9
   m_Name: Spine2
   m_TagString: Untagged
@@ -2488,34 +2486,6 @@ Transform:
   m_Father: {fileID: 8709803415133787767}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.75012946, y: 1.3889096, z: 9.5689945}
---- !u!136 &8733198945961161407
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8706962524195402785}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.3498651
-  m_Direction: 1
-  m_Center: {x: -0.14020552, y: 0.12994725, z: 0.000000005275889}
---- !u!136 &8734642425221175685
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8706962524195402785}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5139104
-  m_Height: 1.3701217
-  m_Direction: 0
-  m_Center: {x: -0.1402055, y: 0.1485767, z: 0.000000004454128}
 --- !u!1 &8706968339861583961
 GameObject:
   m_ObjectHideFlags: 0
@@ -4448,13 +4418,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9048768350086661023}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 126
+  m_Constraints: 122
   m_CollisionDetection: 2
 --- !u!136 &9048768350086661021
 CapsuleCollider:
@@ -4527,6 +4497,7 @@ MonoBehaviour:
   m_Down: 0
   m_UseHitAnimation: 0
   m_Immortal: 0
+  m_StopCharacter: 0
   m_EnemyLayerMask:
     serializedVersion: 2
     m_Bits: 2304
@@ -4538,6 +4509,7 @@ MonoBehaviour:
   m_AudioListFoot:
   - {fileID: 8300000, guid: 926bf0e69f499284d91883ce9619515f, type: 3}
   m_TargetCharacter: {fileID: 0}
+  m_RoarClip: {fileID: 8300000, guid: 485fc27c5e648ad4086b0546e1461068, type: 3}
   m_HeadPoint: {fileID: 794000606912489167}
   m_BreathPoint: {fileID: 672205835452279298}
   m_BreathPoint2: {fileID: 6516958830327488601}

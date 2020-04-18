@@ -18,6 +18,7 @@ public class MiniMeteorComponent : MonoBehaviour
 
     int m_GroundLayer;
 
+    bool m_Hit = false;
     private void Awake()
     {
         m_GroundLayer = 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Obstacle");
@@ -30,6 +31,7 @@ public class MiniMeteorComponent : MonoBehaviour
         m_Speed = _Speed;
         m_Damage = _Damage;
         m_DamageRadius = _DamageRadius;
+        m_Hit = false;
     }
 
     private void Update()
@@ -39,8 +41,9 @@ public class MiniMeteorComponent : MonoBehaviour
         m_Ray.origin = transform.position;
         m_Ray.direction = m_Direction;
 
-        if (Physics.SphereCast(m_Ray, 0.5f, out m_RayHit, m_Speed* deltatime, m_GroundLayer))
+        if (!m_Hit && Physics.SphereCast(m_Ray, 0.5f, out m_RayHit, m_Speed* deltatime, m_GroundLayer))
         {
+            m_Hit = true;
             LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_MiniMeteorImpactPrefab.name);
             life.Initialize();
             life.transform.position = m_RayHit.point;
@@ -57,7 +60,8 @@ public class MiniMeteorComponent : MonoBehaviour
                 character.GiveToDamage(m_Other, m_Damage, true);
             }
 
-            ObjectPool.PushObject(this.gameObject);
+            LifeTimerWithObjectPool mylife = GetComponent<LifeTimerWithObjectPool>();
+            mylife.SetTimer(1.5f);
         }
         else
         {

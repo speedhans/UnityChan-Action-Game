@@ -75,7 +75,7 @@ public class FireDragonMiniMeteorComponent : FireDragonBaseComponent
             if (m_FlyTimer <= 0.0f)
             {
                 m_DurationTimer = m_Duration;
-                SoundManager.Instance.PlayDefaultSound(m_FireDragonCharacter.m_RoarClip);
+                SoundManager.Instance.PlayDefaultSound(m_FireDragonCharacter.m_RoarClip, 0.8f);
 
                 Vector3 effpos = m_AICharacter.transform.position;
                 effpos.y = 20.0f;

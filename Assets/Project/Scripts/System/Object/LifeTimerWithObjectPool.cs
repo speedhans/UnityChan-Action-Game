@@ -24,6 +24,11 @@ public class LifeTimerWithObjectPool : MonoBehaviour
         m_TargetTransform = _Transform;
     }
 
+    public void SetTimer(float _Value)
+    {
+        m_LifeTimer = _Value;
+    }
+
     private void Update()
     {
         m_LifeTimer -= Time.deltaTime;// * GameManager.Instance.TimeScale;

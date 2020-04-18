@@ -17,7 +17,7 @@ public class FireDragonBaseComponent : EnemyBaseComponent
         if (m_FireDragonCharacter.m_IsRotating) return false;
         if (m_FireDragonCharacter.m_IsAvoiding) return false;
         if (m_FireDragonCharacter.m_IsDashing) return false;
-        //if (m_CharacterBase.m_Rigidbody.velocity != Vector3.zero) return false;
+        if (m_CharacterBase.m_Rigidbody.velocity != Vector3.zero) return false;
 
         return true;
     }

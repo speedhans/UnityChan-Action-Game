@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerSkillHalberdAttackComponent : PlayerSkillBaseComponent
 {
+    public float m_Damage = 5.0f;
     public override void Initialize(CharacterBase _CharacterBase)
     {
         base.Initialize(_CharacterBase);
@@ -40,7 +41,7 @@ public class PlayerSkillHalberdAttackComponent : PlayerSkillBaseComponent
     void HitEvent()
     {
         Vector3 pos = m_CharacterBase.transform.position + Vector3.up;
-        if (HitDamage(m_CharacterBase, pos, m_PlayerCharacter.transform.forward, 1.0f, 0.5f, 1.5f))
+        if (HitDamage(m_CharacterBase, pos, m_PlayerCharacter.transform.forward, m_Damage, 0.5f, 1.5f))
         {
             UIManager.Instacne.m_MotionCancelGauge.AddGauge(1);
 

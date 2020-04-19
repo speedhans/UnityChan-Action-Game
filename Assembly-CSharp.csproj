@@ -66,7 +66,6 @@
     <Compile Include="Assets\Project\Scripts\Character\AICharacter.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationCallbackEvent.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\AnimAudioPlay.cs" />
-    <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\AnimFootAudioPlay.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\AnimObjectSpawn.cs" />
     <Compile Include="Assets\Project\Scripts\Character\AnimationScripts\DashTree.cs" />
     <Compile Include="Assets\Project\Scripts\Character\CharacterBase.cs" />
@@ -100,11 +99,14 @@
     <Compile Include="Assets\Project\Scripts\System\Camera\CameraManager.cs" />
     <Compile Include="Assets\Project\Scripts\System\GameManager.cs" />
     <Compile Include="Assets\Project\Scripts\System\InputManager.cs" />
+    <Compile Include="Assets\Project\Scripts\System\LoadingManager.cs" />
     <Compile Include="Assets\Project\Scripts\System\Main.cs" />
+    <Compile Include="Assets\Project\Scripts\System\Main\Main_RedDragon.cs" />
     <Compile Include="Assets\Project\Scripts\System\Object\Billboard.cs" />
     <Compile Include="Assets\Project\Scripts\System\Object\LifeTimerWithObjectPool.cs" />
     <Compile Include="Assets\Project\Scripts\System\Object\ObjectPool.cs" />
     <Compile Include="Assets\Project\Scripts\System\Object\ParticleTimeScaler.cs" />
+    <Compile Include="Assets\Project\Scripts\System\SceneManager.cs" />
     <Compile Include="Assets\Project\Scripts\System\Sound\SoundClip.cs" />
     <Compile Include="Assets\Project\Scripts\System\Sound\SoundManager.cs" />
     <Compile Include="Assets\Project\Scripts\TestCode.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Assets\Project\Scripts\UI\MotionCancelGauge.cs" />
     <Compile Include="Assets\Project\Scripts\UI\PlayerHPBar.cs" />
     <Compile Include="Assets\Project\Scripts\UI\PlayerSPBar.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\SelectMode\SelectModeUIManager.cs" />
     <Compile Include="Assets\Project\Scripts\UI\SkillGroupUI.cs" />
     <Compile Include="Assets\Project\Scripts\UI\SkillUI.cs" />
     <Compile Include="Assets\Project\Scripts\UI\UIManager.cs" />
@@ -198,6 +201,7 @@
     <None Include="Assets\Project\Shaders\URP Toon Shader.shader" />
     <None Include="Assets\Project\Shaders\URP Default Shader.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile No Depth.shader" />
     <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Color4x3.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />

@@ -8,7 +8,7 @@ public class BrainCameraAuthoring : MonoBehaviour
 {
     public Cinemachine.CinemachineBrain m_Brain { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         m_Brain = GetComponent<Cinemachine.CinemachineBrain>();
         CameraManager.Instacne.m_BrainCamera = this;

@@ -16,7 +16,7 @@ public class WeaponEffectController : MonoBehaviour
     public float m_TrailEnableTime;
     float m_TrailEnableTimer;
 
-    bool m_First = true;
+    bool m_First = false;
     private void Awake()
     {
         m_Material = new Material(m_Material);

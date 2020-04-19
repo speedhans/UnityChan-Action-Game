@@ -18,7 +18,7 @@ public class CameraAuthoring : MonoBehaviour
     float m_CameraBlendTime = 0.0f;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_VirtualCamera = GetComponent<Cinemachine.CinemachineVirtualCameraBase>();
         m_VirtualCamera.Priority = m_CameraPriority;
@@ -38,5 +38,17 @@ public class CameraAuthoring : MonoBehaviour
     public void ResetPriority()
     {
         m_VirtualCamera.Priority = m_CameraPriority;
+    }
+
+    bool Destroy = false;
+    private void OnDestroy()
+    {
+        if (Destroy) return;
+        CameraManager.Instacne.RemoveCamera(m_CameraNumber);
+    }
+
+    private void OnApplicationQuit()
+    {
+        Destroy = true;
     }
 }

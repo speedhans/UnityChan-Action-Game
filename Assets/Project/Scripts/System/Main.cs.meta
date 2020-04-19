@@ -3,8 +3,12 @@ guid: 0abbe765ff5112149a923806aa88e128
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
-  executionOrder: -4
+  defaultReferences:
+  - m_SpectrumMaterial: {fileID: 2100000, guid: 37f1a04be1b8c814ca16c344cff5f141,
+      type: 2}
+  - m_SpectrumMaterialSkyBlue: {fileID: 2100000, guid: 820313e87a84c0243b9f4efb833859f4,
+      type: 2}
+  executionOrder: -5
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

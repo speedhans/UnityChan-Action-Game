@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerSkillKatanaAttackComponent : PlayerSkillBaseComponent
 {
+    public float m_Damage = 5.0f;
     public override void Initialize(CharacterBase _CharacterBase)
     {
         base.Initialize(_CharacterBase);
@@ -39,7 +40,7 @@ public class PlayerSkillKatanaAttackComponent : PlayerSkillBaseComponent
     void HitEvent()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(m_CharacterBase, pos, 1.0f, 0.65f))
+        if (HitDamage(m_CharacterBase, pos, m_Damage, 0.65f))
         {
             UIManager.Instacne.m_MotionCancelGauge.AddGauge(1);
 

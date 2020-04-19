@@ -12,7 +12,7 @@ public class FireDragonBreathComponent : FireDragonBaseComponent
     public float m_UseMinDistance = 6.0f;
     public float m_UseMaxDistance = 25.0f;
 
-    public float m_Damage = 10.0f;
+    public float m_Damage = 30.0f;
     public float m_Cooldown = 8.0f;
     public float m_CooldownTimer;
 
@@ -33,6 +33,11 @@ public class FireDragonBreathComponent : FireDragonBaseComponent
 
         if (m_EnableBreath)
         {
+            if (m_CharacterBase.m_Live == CharacterBase.E_Live.DEAD)
+            {
+                BreathEnd();
+                return;
+            }
             HitBreath();
         }
     }

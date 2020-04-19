@@ -12,6 +12,7 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
     static public readonly string m_EffectPunchPrefab = "AttackHit_white01";
     static public readonly string m_EffectKickPrefab = "AttackHit_white02";
 
+    public float m_Damage = 2.0f;
     public int m_AttackLevel = 0;
     float m_Timer = 0.0f;
 
@@ -86,7 +87,7 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
     void HitEvent1()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(m_CharacterBase, pos, new Vector3(0.35f, 1.0f, 0.4f), m_CharacterBase.transform.rotation, 1.0f))
+        if (HitDamage(m_CharacterBase, pos, new Vector3(0.35f, 1.0f, 0.4f), m_CharacterBase.transform.rotation, m_Damage))
         {
             HitEffect(m_EffectPunchPrefab, m_CharacterBase.m_RightHandPoint.position);
             m_PlayerCharacter.AddStemina(5);
@@ -96,7 +97,7 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
     void HitEvent2()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(m_CharacterBase, pos, new Vector3(0.35f, 1.0f, 0.4f), m_CharacterBase.transform.rotation, 1.0f))
+        if (HitDamage(m_CharacterBase, pos, new Vector3(0.35f, 1.0f, 0.4f), m_CharacterBase.transform.rotation, m_Damage))
         {
             HitEffect(m_EffectPunchPrefab, m_CharacterBase.m_LeftHandPoint.position);
             m_PlayerCharacter.AddStemina(7);
@@ -106,7 +107,7 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
     void HitEvent3()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(m_CharacterBase, pos, new Vector3(0.35f, 1.0f, 0.4f), m_CharacterBase.transform.rotation, 1.0f))//if (HitDamage(m_CharacterBase, pos, 1.0f, 0.45f))
+        if (HitDamage(m_CharacterBase, pos, new Vector3(0.35f, 1.0f, 0.4f), m_CharacterBase.transform.rotation, m_Damage))//if (HitDamage(m_CharacterBase, pos, 1.0f, 0.45f))
         {
             HitEffect(m_EffectKickPrefab, pos);
             m_PlayerCharacter.AddStemina(10);

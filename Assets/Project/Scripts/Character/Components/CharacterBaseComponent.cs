@@ -82,7 +82,7 @@ public class CharacterBaseComponent
 
     static public bool HitDamage(CharacterBase _Attacker, Vector3 _StartPoint, Vector3 _Direction, float _Damage, float _Radius, float _Distance, bool _Knockback = false)
     {
-        bool hit = false;
+        HashSet<CharacterBase> damagehash = new HashSet<CharacterBase>();
         RaycastHit[] hits = Physics.SphereCastAll(_StartPoint, _Radius, _Direction, _Distance, _Attacker.m_EnemyLayerMask);
         for (int i = 0; i < hits.Length; ++i)
         {
@@ -91,12 +91,15 @@ public class CharacterBaseComponent
             if (!character) continue;
             if (_Attacker.m_Live == CharacterBase.E_Live.DEAD) continue;
             if (_Attacker.m_Team == character.m_Team) continue;
-            character.GiveToDamage(_Attacker, _Damage, _Knockback);
-            hit = true;
+            damagehash.Add(character);
         }
 
-        if (hit)
+        if (damagehash.Count > 0)
         {
+            foreach (CharacterBase c in damagehash)
+            {
+                c.GiveToDamage(_Attacker, _Damage, _Knockback);
+            }
             return true;
         }
         return false;
@@ -168,7 +171,7 @@ public class CharacterBaseComponent
 
     protected bool DefaultStateCheck()
     {
-        if (GameManager.Instacne.m_Main.IsPlayStop() || GameManager.Instacne.m_Main.IsGameStop()) return false;
+        if (GameManager.Instacne.m_Main.IsPlayStop || GameManager.Instacne.m_Main.IsGameStop) return false;
         if (m_CharacterBase.m_Live == CharacterBase.E_Live.DEAD) return false;
         if (m_CharacterBase.m_StopCharacter) return false;
         if (m_CharacterBase.m_HitMotion) return false;

@@ -49,5 +49,17 @@ namespace sunTT
         {
             return _StraightLength / Mathf.Cos(_Angle * (Mathf.PI / 180));
         }
+
+        static public Vector3 AbsVector3(Vector3 _Source)
+        {
+            Vector3 v = Vector3.zero;
+            if (_Source.x < 0.0f)
+                v.x = _Source.x * -1.0f;
+            if (_Source.y < 0.0f)
+                v.y = _Source.y * -1.0f;
+            if (_Source.z < 0.0f)
+                v.z = _Source.z * -1.0f;
+            return v;
+        }
     }
 }

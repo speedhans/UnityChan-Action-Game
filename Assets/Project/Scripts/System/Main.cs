@@ -9,18 +9,13 @@ public class Main : MonoBehaviour
 
     public bool m_CameraAxisXInvers = false;
 
-    public AudioClip m_FootClip1;
-
-    [SerializeField]
-    bool m_PlayStop;
-    [SerializeField]
-    bool m_GameStop;
-
     private void Awake()
     {
         GameManager.Instacne.m_Main = this;
     }
 
-    public bool IsPlayStop() { return m_PlayStop; }
-    public bool IsGameStop() { return m_GameStop; }
+    public bool IsPlayStop = false;
+    public bool IsGameStop;
+
+    public PlayerCharacter m_PlayerCharacter;
 }

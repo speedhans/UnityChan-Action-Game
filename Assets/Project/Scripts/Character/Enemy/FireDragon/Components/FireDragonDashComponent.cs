@@ -13,6 +13,8 @@ public class FireDragonDashComponent : FireDragonBaseComponent
     public float m_Duration = 2.0f;
     public float m_DurationTimer;
 
+    float m_DashDamage = 25.0f;
+
     public float m_UseMaxDistance = 25.0f;
     bool m_UseDash = false;
     int m_DashLevel = 0;
@@ -29,10 +31,18 @@ public class FireDragonDashComponent : FireDragonBaseComponent
     public override void FixedUpdateComponent(float _FixedDeltaTime)
     {
         base.FixedUpdateComponent(_FixedDeltaTime);
-        if (m_DashLevel == 1)
-            DashLevel1(_FixedDeltaTime);
-        else if (m_DashLevel == 2)
-            DashLevel2(_FixedDeltaTime);
+        if (m_DashLevel > 0)
+        {
+            if (m_CharacterBase.m_Live == CharacterBase.E_Live.DEAD)
+            {
+                MotionEnd();
+                return;
+            }
+            if (m_DashLevel == 1)
+                DashLevel1(_FixedDeltaTime);
+            else if (m_DashLevel == 2)
+                DashLevel2(_FixedDeltaTime);
+        }
 
         if (m_CooldownTimer > 0.0f)
         {
@@ -110,7 +120,7 @@ public class FireDragonDashComponent : FireDragonBaseComponent
         HashSet<CharacterBase> hash = OverlabSphere(m_FireDragonCharacter, pos, 1.75f, ref m_DamageList);
         foreach (CharacterBase c in hash)
         {
-            c.GiveToDamage(m_FireDragonCharacter, 5.0f, true);
+            c.GiveToDamage(m_FireDragonCharacter, m_DashDamage, true);
             m_DamageList.Add(c);
         }
     }

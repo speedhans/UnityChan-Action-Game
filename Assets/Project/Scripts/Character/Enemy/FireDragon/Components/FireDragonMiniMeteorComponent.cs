@@ -26,6 +26,8 @@ public class FireDragonMiniMeteorComponent : FireDragonBaseComponent
     public float m_MeteorSpawnDelay = 0.25f;
     public float m_MeteorSpawnTimer;
 
+    float m_MeteorDamage = 20.0f;
+
     bool m_UseMeteor = false;
 
     public override void Initialize(CharacterBase _CharacterBase)
@@ -53,6 +55,7 @@ public class FireDragonMiniMeteorComponent : FireDragonBaseComponent
         if (!DefaultStateCheck()) return;
         if (!DragonStateCheck()) return;
         if (!m_AICharacter.m_TargetCharacter) return;
+        if (!ConditionCheck()) return;
         if (!CalculateFrequency((int)(m_AICharacter.GetTargetData().Distance))) return;
 
         StartNewMotion();
@@ -127,7 +130,7 @@ public class FireDragonMiniMeteorComponent : FireDragonBaseComponent
                         life.transform.position = mpos;
 
                         MiniMeteorComponent meteor = life.GetComponent<MiniMeteorComponent>();
-                        meteor.Initialize(m_FireDragonCharacter, direction, 10.0f, 20.0f, 3.5f);
+                        meteor.Initialize(m_FireDragonCharacter, direction, 10.0f, m_MeteorDamage, 3.5f);
 
                         life.gameObject.SetActive(true);
                     }

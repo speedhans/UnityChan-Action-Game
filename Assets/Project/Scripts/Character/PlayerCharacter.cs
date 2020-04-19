@@ -31,6 +31,8 @@ public class PlayerCharacter : CharacterBase
     {
         base.Awake();
 
+        GameManager.Instacne.m_Main.m_PlayerCharacter = this;
+
         m_Team = E_Team.RED;
 
         SetHand();
@@ -97,8 +99,12 @@ public class PlayerCharacter : CharacterBase
     protected override void Update()
     {
         base.Update();
-
-        AddStemina(2.0f * Time.deltaTime);
+        float deltatime = Time.deltaTime;
+        if (m_Live != E_Live.DEAD && !m_StopCharacter)
+        {
+            AddHealth(GameManager.Instacne.m_GameLevel == 2 ? 0.5f * deltatime : 2.0f * deltatime);
+            AddStemina(2.0f * deltatime);
+        }
     }
 
     public void StartMotionCancelRim(float _Pow = 5.0f, float _Duration = 1.0f)
@@ -197,14 +203,17 @@ public class PlayerCharacter : CharacterBase
 
         if (m_UseHitAnimation)
         {
-            if (!_Knockback)
+            if (m_Health - _Damage > 0.0f)
             {
-                int number = Random.Range(0, 100);
-                SoundManager.Instance.PlayDefaultSound(number > 50 ? m_AudioListHit[0] : m_AudioListHit[1]);
-            }
-            else
-            {
-                SoundManager.Instance.PlayDefaultSound(m_AudioListHit[2]);
+                if (!_Knockback)
+                {
+                    int number = Random.Range(0, 100);
+                    SoundManager.Instance.PlayDefaultSound(number > 50 ? m_AudioListHit[0] : m_AudioListHit[1]);
+                }
+                else
+                {
+                    SoundManager.Instance.PlayDefaultSound(m_AudioListHit[2]);
+                }
             }
             AllWeaponDisable();
         }
@@ -220,6 +229,16 @@ public class PlayerCharacter : CharacterBase
     public void SubStemina(float _Value)
     {
         m_Stemina = Mathf.Clamp(m_Stemina - _Value, 0.0f, m_SteminaMax);
+    }
+
+    public void AddHealth(float _Value)
+    {
+        m_Health = Mathf.Clamp(m_Health + _Value, 0.0f, m_HealthMax);
+    }
+
+    public void SubHealth(float _Value)
+    {
+        m_Health = Mathf.Clamp(m_Health - _Value, 0.0f, m_HealthMax);
     }
 
     public void CreateSpectrumMesh(float _Duration, bool _AlphaDecrease, Material _Material)

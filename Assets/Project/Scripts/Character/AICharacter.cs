@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AICharacter : CharacterBase
 {
+    static readonly int m_AnimKeyIdleStand = Animator.StringToHash("Idle Non Loop");
+
     public struct S_TargetData
     {
         public Vector3 Direction;
@@ -28,7 +30,7 @@ public class AICharacter : CharacterBase
         {
             if (m_TargetCharacter.m_Live == E_Live.DEAD)
             {
-                m_TargetCharacter = null;
+                ResetState();
             }
             else
             {
@@ -55,5 +57,6 @@ public class AICharacter : CharacterBase
     public virtual void ResetState()
     {
         m_TargetCharacter = null;
+        m_ActiveMotionRunning = false;
     }
 }

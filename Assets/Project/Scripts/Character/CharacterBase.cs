@@ -10,7 +10,7 @@ public class CharacterBase : MonoBehaviour, IDamage
     static public readonly int m_AnimKeyIdle = Animator.StringToHash("Idle/MoveTree");
     static public readonly int m_AnimKeyMoveDirectionX = Animator.StringToHash("MoveDirectionX");
     static public readonly int m_AnimKeyMoveDirectionY = Animator.StringToHash("MoveDirectionY");
-    static public readonly int m_AnimKeyDead = Animator.StringToHash("Dead");
+    static public readonly int m_AnimKeyDeath = Animator.StringToHash("Death");
     static public readonly int m_AnimKeyHit = Animator.StringToHash("Hit");
     static public readonly int m_AnimKeyHitAirStart = Animator.StringToHash("HitAir start");
     static public readonly int m_AnimKeyHitAirEnd = Animator.StringToHash("HitAir end");
@@ -77,6 +77,7 @@ public class CharacterBase : MonoBehaviour, IDamage
     public AudioClip[] m_AudioList;
     public AudioClip[] m_AudioListHit;
     public AudioClip[] m_AudioListFoot;
+    public AudioClip m_DeathClip;
 
     protected virtual void Awake()
     {
@@ -205,13 +206,18 @@ public class CharacterBase : MonoBehaviour, IDamage
         if (_Attacker.m_CharacterID == 0)
         {
             UIManager.Instacne.m_ComboViewer.AddCombo();
+            Vector3 pos = _Attacker.transform.position + _Attacker.transform.forward + (Vector3.up * 1.5f) + (_Attacker.transform.right * 0.5f);
+            Billboard damage = ObjectPool.GetObject<Billboard>("DamageText");
+            damage.Initialize(_Damage.ToString(), pos);
+            damage.gameObject.SetActive(true);
         }
 
         m_Health -= _Damage;
         if (m_Health <= 0.0f)
         {
             m_Live = E_Live.DEAD;
-            m_Animator.CrossFade(m_AnimKeyDead, 0.15f);
+            m_Animator.CrossFade(m_AnimKeyDeath, 0.15f);
+            SoundManager.Instance.PlayDefaultSound(m_DeathClip);
         }
         else
         {
@@ -255,6 +261,14 @@ public class CharacterBase : MonoBehaviour, IDamage
         }
     }
 
+    public void SetDeadState()
+    {
+        m_ActiveMotionRunning = false;
+        m_IsDashing = false;
+        m_IsDashing = false;
+        m_Down = false;
+    }
+
     public void StartNewMotion()
     {
         m_ActiveMotionRunning = true;
@@ -263,7 +277,7 @@ public class CharacterBase : MonoBehaviour, IDamage
 
     public bool CheckMotionCancelAvailability(int _DecreaseGauge = 2)
     {
-        if (GameManager.Instacne.m_Main.IsPlayStop() || GameManager.Instacne.m_Main.IsGameStop()) return false;
+        if (GameManager.Instacne.m_Main.IsPlayStop || GameManager.Instacne.m_Main.IsGameStop) return false;
         if (m_Live == E_Live.DEAD) return false;
         if (m_StopCharacter) return false;
         if (m_HitMotion) return false;

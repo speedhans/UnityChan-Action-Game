@@ -28,6 +28,8 @@ public class PlayerCameraControlComponent : CharacterBaseComponent
     public override void UpdateComponent(float _DeltaTime)
     {
         base.UpdateComponent(_DeltaTime);
+        if (GameManager.Instacne.m_Main.IsPlayStop) return;
+        if (m_CharacterBase.m_Live == CharacterBase.E_Live.DEAD) return;
 
         Vector2 mouseAxis = InputManager.Instacne.m_Mouse2D;
 

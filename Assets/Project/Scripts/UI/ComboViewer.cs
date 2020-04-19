@@ -82,4 +82,6 @@ public class ComboViewer : MonoBehaviour
         m_CountText.fontSize = m_FontMinSize;
         m_TextAnimationCoroutine = null;
     }
+
+    public int GetCurrentCombo() { return m_CurrentCombo; }
 }

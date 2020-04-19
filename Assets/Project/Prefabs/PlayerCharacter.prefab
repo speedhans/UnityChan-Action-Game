@@ -208,6 +208,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 60e04cb188aff4081a59ce70a1ff20c9, type: 3}
   m_AudioListFoot:
   - {fileID: 8300000, guid: 5703275bf2d30d14696dd608a7a1ce2f, type: 3}
+  m_DeathClip: {fileID: 8300000, guid: 14442038946004af3aaf906b64944b5f, type: 3}
   m_Stemina: 50
   m_SteminaMax: 50
   m_FollowCamera: {fileID: 0}
@@ -252,7 +253,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787395992094865344}
-  m_LocalRotation: {x: -0, y: 0.000000021684702, z: 5.518736e-10, w: 1}
+  m_LocalRotation: {x: 0.000000029802319, y: 0.000000010184695, z: 0.000000005914413,
+    w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

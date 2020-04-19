@@ -14,6 +14,8 @@ public class AnimAudioPlay : StateMachineBehaviour
     float m_PlayNormalizeFrame;
     float m_CurrentFrame;
     bool m_Enable = false;
+    [SerializeField]
+    bool m_Loop = false;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -24,9 +26,9 @@ public class AnimAudioPlay : StateMachineBehaviour
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         float frame = stateInfo.normalizedTime;
-        if (frame > 1.0f)
+        if (m_Loop && frame > 1.0f)
         {
-            frame = frame - Mathf.Floor(frame);
+            frame -= Mathf.Floor(frame);
             if (frame < m_CurrentFrame)
                 m_Enable = true;
         }

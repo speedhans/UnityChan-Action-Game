@@ -25,4 +25,6 @@ public class GameManager : MonoBehaviour
     }
 
     public Main m_Main;
+
+    public int m_GameLevel = 1;
 }

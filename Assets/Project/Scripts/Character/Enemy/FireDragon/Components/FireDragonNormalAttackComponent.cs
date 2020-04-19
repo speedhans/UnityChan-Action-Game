@@ -27,6 +27,10 @@ public class FireDragonNormalAttackComponent : FireDragonBaseComponent
 
     bool m_TailAttack = false;
 
+    float m_HeadAttackDamage = 10.0f;
+    float m_WingAttackDamage = 12.0f;
+    float m_TailAttackDamage = 15.0f;
+
     HashSet<CharacterBase> m_DamageList = new HashSet<CharacterBase>();
 
     public override void Initialize(CharacterBase _CharacterBase)
@@ -84,7 +88,7 @@ public class FireDragonNormalAttackComponent : FireDragonBaseComponent
             foreach(CharacterBase c in list)
             {
                 if (m_DamageList.Contains(c)) continue;
-                c.GiveToDamage(m_FireDragonCharacter, 5, true);
+                c.GiveToDamage(m_FireDragonCharacter, m_TailAttackDamage, true);
                 m_DamageList.Add(c);
 
                 LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_TailAttackHitEffectPrefab);
@@ -155,7 +159,7 @@ public class FireDragonNormalAttackComponent : FireDragonBaseComponent
             SoundManager.Instance.PlayDefaultSound(m_CharacterBase.m_AudioList[1], 0.5f);
 
         Vector3 pos = m_FireDragonCharacter.m_HeadPoint.transform.position;
-        if (HitDamage(m_CharacterBase, pos, 2, 0.75f))
+        if (HitDamage(m_CharacterBase, pos, m_HeadAttackDamage, 0.75f))
         {
             LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_DragonHeadAttackHitPrefab);
             life.Initialize();
@@ -186,7 +190,7 @@ public class FireDragonNormalAttackComponent : FireDragonBaseComponent
 
     void FrontWingAttackLeft()
     {
-        HitDamage(m_FireDragonCharacter, m_FireDragonCharacter.m_LeftHandPoint.transform.position, 5, 1);
+        HitDamage(m_FireDragonCharacter, m_FireDragonCharacter.m_LeftHandPoint.transform.position, m_WingAttackDamage, 1);
         LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_DragonWingAttackSmokePrefab);
         life.Initialize();
         life.transform.position = m_FireDragonCharacter.m_LeftHandPoint.transform.position + Vector3.down * 0.5f;
@@ -195,7 +199,7 @@ public class FireDragonNormalAttackComponent : FireDragonBaseComponent
 
     void FrontWingAttackRight()
     {
-        HitDamage(m_FireDragonCharacter, m_FireDragonCharacter.m_RightHandPoint.transform.position, 5, 1);
+        HitDamage(m_FireDragonCharacter, m_FireDragonCharacter.m_RightHandPoint.transform.position, m_WingAttackDamage, 1);
         LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_DragonWingAttackSmokePrefab);
         life.Initialize();
         life.transform.position = m_FireDragonCharacter.m_RightHandPoint.transform.position + Vector3.down * 0.5f;

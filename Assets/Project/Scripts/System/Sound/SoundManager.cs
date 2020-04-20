@@ -45,6 +45,7 @@ public class SoundManager : MonoBehaviour
     Coroutine m_BGMCoroutine;
 
     float m_Volume = 1.0f;
+    float m_BGMVolume = 1.0f;
 
     void InitializeInstanceAudio()
     {
@@ -162,21 +163,24 @@ public class SoundManager : MonoBehaviour
         m_BGMNumber = 0;
 
         if (m_BGMCoroutine != null) StopCoroutine(m_BGMCoroutine);
+        m_BGMPlayer.Stop();
         m_BGMCoroutine = StartCoroutine(C_BGMPlay(3.0f));
     }
 
     IEnumerator C_BGMPlay(float _WaitTime)
     {
+        float wait = 0.0f;
         while(true)
         {
             if (!m_BGMPlayer.isPlaying)
             {
-                yield return new WaitForSeconds(_WaitTime);
+                yield return new WaitForSeconds(wait);
                 m_BGMPlayer.clip = m_BGMList[m_BGMNumber];
                 m_BGMPlayer.Play();
                 ++m_BGMNumber;
                 if (m_BGMNumber >= m_BGMList.Count)
                     m_BGMNumber = 0;
+                wait = _WaitTime;
             }
 
             yield return null;
@@ -195,11 +199,15 @@ public class SoundManager : MonoBehaviour
         {
             a.volume = m_Volume;
         }
+    }
 
-        m_BGMPlayer.volume = m_Volume * 0.7f;
+    public void SetBGMVolume(float _Volume) 
+    {
+        m_BGMVolume = _Volume;
+        m_BGMPlayer.volume = m_BGMVolume;
     }
 
     public float GetDefaultVolume() { return m_Volume; }
     public float Get3DVolume() { return m_Volume * 0.5f; }
-    public float GetBGMVolume() { return m_Volume * 0.7f; }
+    public float GetBGMVolume() { return m_BGMVolume; }
 }

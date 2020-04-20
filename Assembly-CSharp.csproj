@@ -94,6 +94,7 @@
     <Compile Include="Assets\Project\Scripts\Character\Enemy\FireDragon\FireDragonCharacter.cs" />
     <Compile Include="Assets\Project\Scripts\Character\Interface\IDamage.cs" />
     <Compile Include="Assets\Project\Scripts\Character\PlayerCharacter.cs" />
+    <Compile Include="Assets\Project\Scripts\CustomPostProcess\PPPointBlurFeature.cs" />
     <Compile Include="Assets\Project\Scripts\System\Camera\BrainCameraAuthoring.cs" />
     <Compile Include="Assets\Project\Scripts\System\Camera\CameraAuthoring.cs" />
     <Compile Include="Assets\Project\Scripts\System\Camera\CameraManager.cs" />
@@ -106,14 +107,21 @@
     <Compile Include="Assets\Project\Scripts\System\Object\LifeTimerWithObjectPool.cs" />
     <Compile Include="Assets\Project\Scripts\System\Object\ObjectPool.cs" />
     <Compile Include="Assets\Project\Scripts\System\Object\ParticleTimeScaler.cs" />
+    <Compile Include="Assets\Project\Scripts\System\Object\StaticBillboard.cs" />
     <Compile Include="Assets\Project\Scripts\System\SceneManager.cs" />
     <Compile Include="Assets\Project\Scripts\System\Sound\SoundClip.cs" />
     <Compile Include="Assets\Project\Scripts\System\Sound\SoundManager.cs" />
     <Compile Include="Assets\Project\Scripts\TestCode.cs" />
+    <Compile Include="Assets\Project\Scripts\Tutorial\DummyWheel.cs" />
+    <Compile Include="Assets\Project\Scripts\Tutorial\GamePortal.cs" />
     <Compile Include="Assets\Project\Scripts\UI\ComboViewer.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\EnemyHPBar.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\GameTimer.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\MainCanvas.cs" />
     <Compile Include="Assets\Project\Scripts\UI\MotionCancelGauge.cs" />
     <Compile Include="Assets\Project\Scripts\UI\PlayerHPBar.cs" />
     <Compile Include="Assets\Project\Scripts\UI\PlayerSPBar.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\PopupMenu.cs" />
     <Compile Include="Assets\Project\Scripts\UI\SelectMode\SelectModeUIManager.cs" />
     <Compile Include="Assets\Project\Scripts\UI\SkillGroupUI.cs" />
     <Compile Include="Assets\Project\Scripts\UI\SkillUI.cs" />
@@ -195,6 +203,7 @@
     <None Include="Assets\Project\Font\상용한글2350자.txt" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
     <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Mask4Toon.shader" />
+    <None Include="Assets\Project\Shaders\URP PointBlur Shader.shader" />
     <None Include="Assets\Store\Model\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
     <None Include="Assets\Store\Model\Malbers Animations\Common\Shaders\Mask4Realistic.shader" />
     <None Include="Assets\Project\Shaders\URP Trail Shader.shader" />

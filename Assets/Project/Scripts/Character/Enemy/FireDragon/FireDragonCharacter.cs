@@ -19,7 +19,6 @@ public class FireDragonCharacter : AICharacter
     protected override void Awake()
     {
         base.Awake();
-
         m_LeftHandPoint = FindBone(m_Animator.transform, "LeftHandPoint");
         m_RightHandPoint = FindBone(m_Animator.transform, "RightHandPoint");
 
@@ -30,6 +29,11 @@ public class FireDragonCharacter : AICharacter
         SetComponent<FireDragonBreathComponent>(this);
         SetComponent<FireDragonDashComponent>(this);
         SetComponent<FireDragonMiniMeteorComponent>(this);
+    }
+
+    private void Start()
+    {
+        UIManager.Instacne.m_EnemyHPBar.SetCharacter(this);
     }
 
     public override void ResetState()

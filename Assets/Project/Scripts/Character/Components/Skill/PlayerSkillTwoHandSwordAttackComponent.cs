@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerSkillTwoHandSwordAttackComponent : PlayerSkillBaseComponent
 {
-    public float m_Damage = 5.0f;
+    public float m_Damage = 8.0f;
 
     public override void Initialize(CharacterBase _CharacterBase)
     {
@@ -19,11 +19,6 @@ public class PlayerSkillTwoHandSwordAttackComponent : PlayerSkillBaseComponent
         UIManager.Instacne.m_SkillGroupUI.SetSkill(this, 1);
     }
 
-    public override void DestoryComponent()
-    {
-        base.DestoryComponent();
-        InputManager.Instacne.ReleaseNumberKeyEvent(2, TwoHandSwordAttack);
-    }
 
     void TwoHandSwordAttack(InputActionPhase _Phase)
     {

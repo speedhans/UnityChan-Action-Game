@@ -279,6 +279,17 @@ public class @InputSetting : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""3d87c65a-6408-4826-873b-38d6efb8125c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""c62c4e52-5258-452a-968a-4b66e1c3b3c3"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",

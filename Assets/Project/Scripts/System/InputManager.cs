@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour, InputSetting.IPlayerActions
 
     void Initialize()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     InputSetting m_InputSetting;

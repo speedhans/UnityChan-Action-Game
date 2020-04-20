@@ -23,4 +23,5 @@ public class UIManager : MonoBehaviour
     public MotionCancelGauge m_MotionCancelGauge;
     public ComboViewer m_ComboViewer;
     public SkillGroupUI m_SkillGroupUI;
+    public EnemyHPBar m_EnemyHPBar;
 }

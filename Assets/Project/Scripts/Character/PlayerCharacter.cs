@@ -244,6 +244,10 @@ public class PlayerCharacter : CharacterBase
     public void CreateSpectrumMesh(float _Duration, bool _AlphaDecrease, Material _Material)
     {
         GameObject g = Instantiate(m_Animator.gameObject);
+        foreach(WeaponEffectController w in g.GetComponentsInChildren<WeaponEffectController>())
+        {
+            w.enabled = false;
+        }
         g.transform.SetPositionAndRotation(transform.position, transform.rotation);
         Animator a = g.GetComponent<Animator>();
         float point = m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerSkillKatanaAttackComponent : PlayerSkillBaseComponent
 {
-    public float m_Damage = 5.0f;
+    public float m_Damage = 7.0f;
     public override void Initialize(CharacterBase _CharacterBase)
     {
         base.Initialize(_CharacterBase);
@@ -18,11 +18,6 @@ public class PlayerSkillKatanaAttackComponent : PlayerSkillBaseComponent
         UIManager.Instacne.m_SkillGroupUI.SetSkill(this, 3);
     }
 
-    public override void DestoryComponent()
-    {
-        base.DestoryComponent();
-        InputManager.Instacne.ReleaseNumberKeyEvent(4, KatanaAttack);
-    }
     void KatanaAttack(InputActionPhase _Phase)
     {
         if (_Phase != InputActionPhase.Started) return;

@@ -48,7 +48,6 @@ public class PlayerNormalAttackComponent : CharacterBaseComponent
     public override void DestoryComponent()
     {
         base.DestoryComponent();
-        InputManager.Instacne.ReleaseMouseEvent(0, MouseEvent);
 
         m_CharacterBase.m_AnimCallback.ReleaseAttackHitEvent(1);
         m_CharacterBase.m_AnimCallback.ReleaseAttackHitEvent(2);

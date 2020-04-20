@@ -73,6 +73,8 @@ public class CharacterBase : MonoBehaviour, IDamage
     [HideInInspector]
     public bool m_StopCharacter = false;
 
+    public System.Action m_DeadEvent;
+
     public LayerMask m_EnemyLayerMask;
     public AudioClip[] m_AudioList;
     public AudioClip[] m_AudioListHit;
@@ -216,6 +218,7 @@ public class CharacterBase : MonoBehaviour, IDamage
         if (m_Health <= 0.0f)
         {
             m_Live = E_Live.DEAD;
+            m_DeadEvent?.Invoke();
             m_Animator.CrossFade(m_AnimKeyDeath, 0.15f);
             SoundManager.Instance.PlayDefaultSound(m_DeathClip);
         }

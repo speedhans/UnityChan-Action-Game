@@ -4490,8 +4490,8 @@ MonoBehaviour:
   m_Live: 0
   m_Model: {fileID: 0}
   m_CharacterID: 1
-  m_Health: 1000
-  m_HealthMax: 1000
+  m_Health: 700
+  m_HealthMax: 700
   m_ActiveMotionRunning: 0
   m_IsDashing: 0
   m_HitMotion: 0

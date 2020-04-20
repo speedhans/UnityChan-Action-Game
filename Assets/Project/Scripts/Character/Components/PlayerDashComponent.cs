@@ -21,13 +21,6 @@ public class PlayerDashComponent : CharacterBaseComponent
     }
 
 
-    public override void DestoryComponent()
-    {
-        base.DestoryComponent();
-        InputManager.Instacne.ReleaseKeyEvent("leftShift", Dash);
-    }
-
-
     void Dash(InputActionPhase _Phase)
     {
         if (_Phase != InputActionPhase.Started) return;

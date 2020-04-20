@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerSkillHalberdAttackComponent : PlayerSkillBaseComponent
 {
-    public float m_Damage = 5.0f;
+    public float m_Damage = 10.0f;
     public override void Initialize(CharacterBase _CharacterBase)
     {
         base.Initialize(_CharacterBase);
@@ -16,12 +16,6 @@ public class PlayerSkillHalberdAttackComponent : PlayerSkillBaseComponent
         m_CharacterBase.m_AnimCallback.AddAttackHitEvent(HitEvent, 13);
 
         UIManager.Instacne.m_SkillGroupUI.SetSkill(this, 2);
-    }
-
-    public override void DestoryComponent()
-    {
-        base.DestoryComponent();
-        InputManager.Instacne.ReleaseNumberKeyEvent(3, TwoHandHalberdAttack);
     }
 
     void TwoHandHalberdAttack(InputActionPhase _Phase)

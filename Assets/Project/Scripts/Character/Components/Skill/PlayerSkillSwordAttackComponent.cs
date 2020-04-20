@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerSkillSwordAttackComponent : PlayerSkillBaseComponent
 {
-    public float m_Damage = 5.0f;
+    public float m_Damage = 4.0f;
     public override void Initialize(CharacterBase _CharacterBase)
     {
         base.Initialize(_CharacterBase);
@@ -18,11 +18,6 @@ public class PlayerSkillSwordAttackComponent : PlayerSkillBaseComponent
         UIManager.Instacne.m_SkillGroupUI.SetSkill(this, 0);
     }
 
-    public override void DestoryComponent()
-    {
-        base.DestoryComponent();
-        InputManager.Instacne.ReleaseNumberKeyEvent(1, SwordAttack);
-    }
     void SwordAttack(InputActionPhase _Phase)
     {
         if (_Phase != InputActionPhase.Started) return;

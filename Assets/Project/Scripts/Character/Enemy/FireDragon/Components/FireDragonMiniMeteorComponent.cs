@@ -109,7 +109,7 @@ public class FireDragonMiniMeteorComponent : FireDragonBaseComponent
                         Vector3 mpos = m_AICharacter.transform.position;
                         mpos.y = 25.0f;
                         Vector3 direction = Vector3.zero;
-                        if (Random.Range(0, 100) > 40)
+                        if (Random.Range(0, 100) > 40 || m_AICharacter.m_TargetCharacter == null)
                         {
                             mpos.x += Random.Range(-25, 25);
                             mpos.z += Random.Range(-25, 25);

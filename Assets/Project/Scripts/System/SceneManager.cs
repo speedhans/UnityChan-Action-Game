@@ -33,6 +33,7 @@ public class SceneManager : MonoBehaviour
 
     public void LoadScene(string _SceneName)
     {
+        Time.timeScale = 1.0f;
         if (m_LoadingCoroutine != null) StopCoroutine(m_LoadingCoroutine);
         UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene");
         m_LoadingCoroutine = StartCoroutine(C_Loading(_SceneName));
@@ -40,6 +41,7 @@ public class SceneManager : MonoBehaviour
 
     public void LoadSceneDirect(string _SceneName)
     {
+        Time.timeScale = 1.0f;
         if (m_LoadingCoroutine != null) StopCoroutine(m_LoadingCoroutine);
         UnityEngine.SceneManagement.SceneManager.LoadScene(_SceneName);
     }

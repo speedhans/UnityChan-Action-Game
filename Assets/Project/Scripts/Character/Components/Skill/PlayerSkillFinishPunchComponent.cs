@@ -30,7 +30,7 @@ public class PlayerSkillFinishPunchComponent : PlayerSkillBaseComponent
     void FinishPunch(InputActionPhase _Phase)
     {
         if (_Phase != InputActionPhase.Started) return;
-        if (UIManager.Instacne.m_ComboViewer.GetCurrentCombo() < 10) return;
+        if (UIManager.Instacne.m_ComboViewer.GetCurrentCombo() < 7) return;
         if (!CheckSkillAvailability()) return;
 
         if (CheckMotionCancelAvailability())
@@ -53,7 +53,7 @@ public class PlayerSkillFinishPunchComponent : PlayerSkillBaseComponent
     void HitEvent()
     {
         Vector3 pos = m_CharacterBase.transform.position + (Vector3.up + m_CharacterBase.transform.forward);
-        if (HitDamage(m_CharacterBase, pos, Mathf.Floor((m_Damage + (UIManager.Instacne.m_ComboViewer.GetCurrentCombo() * 1.2f))), 0.5f))
+        if (HitDamage(m_CharacterBase, pos, Mathf.Floor((m_Damage + (UIManager.Instacne.m_ComboViewer.GetCurrentCombo() * 1.2f))), 0.7f))
         {
             LifeTimerWithObjectPool life = ObjectPool.GetObject<LifeTimerWithObjectPool>(m_HitEffectPrefabName);
             if (life)

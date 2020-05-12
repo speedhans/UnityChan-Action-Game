@@ -61,5 +61,31 @@ namespace sunTT
                 v.z = _Source.z * -1.0f;
             return v;
         }
+
+        /*
+         * w 는 depth
+         */
+        static public Vector3 ScreenPointToWorldManual(Camera _Camera, Vector3 _Position)
+        {
+            Matrix4x4 world2Screen = _Camera.projectionMatrix * _Camera.worldToCameraMatrix;
+            Matrix4x4 screen2World = world2Screen.inverse;
+
+            float[] inn = new float[4];
+
+            inn[0] = 2.0f * (_Position.x / _Camera.pixelWidth) - 1.0f;
+            inn[1] = 2.0f * (_Position.y / _Camera.pixelHeight) - 1.0f;
+            inn[2] = _Camera.nearClipPlane;
+            inn[3] = 1.0f;
+
+            Vector4 pos = screen2World * new Vector4(inn[0], inn[1], inn[2], inn[3]);
+
+            pos.w = 1.0f / pos.w;
+
+            pos.x *= pos.w;
+            pos.y *= pos.w;
+            pos.z *= pos.w;
+
+            return new Vector3(pos.x, pos.y, pos.z);
+        }
     }
 }
